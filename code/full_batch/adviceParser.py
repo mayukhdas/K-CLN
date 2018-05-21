@@ -7,7 +7,7 @@ Created on Sat May 19 13:37:50 2018
 
 # -*- coding: utf-8 -*-
 
-import cPickle
+#import cPickle
 import gzip
 import csv
 
@@ -29,7 +29,11 @@ def adviceFileReader(file):
     lines = [line.rstrip('\n') for line in open(file)]
     return lines
 
-
+def processLiteral(lit):
+    name = str.split(lit,"(")[0]
+    terms = str.split(str.replace(str.split(lit,"(")[1],")",""),",")
+    return name,terms
+    
 
 
 with open("Pubmed-Diabetes.DIRECTED.cites.tab") as tsv:
@@ -49,7 +53,15 @@ with open("Pubmed-Diabetes.DIRECTED.cites.tab") as tsv:
         #print "------------"
     #print raw_rels
 
-
+adviceList = adviceFileReader("advice.txt")
+if len(adviceList) > 0:
+    for a in adviceList:
+        target = str.split(":-")[0]
+        body = str.split(":-")[1]
+        #process head
+        pname,terms = processLiteral(target)
+        
+        
 
 
 
