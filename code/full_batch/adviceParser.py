@@ -61,6 +61,8 @@ if len(adviceList) > 0:
         #process head
         pname,terms = processLiteral(target)
         
+        bodyarr = str.split(body,";")
+        
         
 
 
