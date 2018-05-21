@@ -59,9 +59,12 @@ if len(adviceList) > 0:
         target = str.split(":-")[0]
         body = str.split(":-")[1]
         #process head
-        pname,terms = processLiteral(target)
+        Tpname,Tterms = processLiteral(target)
         
-        bodyarr = str.split(body,";")
+        bodyArr = str.split(body,";")
+        for bodyLit in bodyArr:
+            Bpname, Bterms = processLiteral(bodyLit)
+            
         
         
 
