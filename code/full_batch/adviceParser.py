@@ -55,16 +55,28 @@ def parseRel():
         #print raw_rels
 
 for adv in adviceSet:
+    
+    isAdvGrounded = True
+    
     head = adv['h']
     body = adv['b']
     
+    targetEnt = '';
+    
     print("head")
-    for p in head:
-        print(p)
+    pref = head[0]
+    if len(head)>1:
+        npref = head[1]
+    targetEnt = npref[1]
+    
+    if(targetEnt.startswith("?")):
+        isAdvGrounded = None
+    
     
     print("body")
     for p in body:
         print(p)
+    
             
         
         
