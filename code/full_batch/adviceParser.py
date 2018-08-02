@@ -10,6 +10,7 @@ Created on Sat May 19 13:37:50 2018
 #import cPickle
 import gzip
 import csv
+from adviceFile import adviceSet
 
 path = '../data/' + "pubmed" + '.pkl.gz'
 
@@ -35,35 +36,35 @@ def processLiteral(lit):
     return name,terms
     
 
+def parseRel():
+    with open("Pubmed-Diabetes.DIRECTED.cites.tab") as tsv:
+        for line in csv.reader(tsv, dialect="excel-tab"):
+            if ("DIRECTED" in line) or ("NO_FEATURES" in line):
+                continue
+            for i in range(len(line)):
+                #print line[i]
+                if "|" in line[i]:
+                    if raw_rels.has_key(line[i-1]):
+                        raw_rels[line[i-1]].append(line[i+1])
+                    else:
+                        raw_rels.setdefault(line[i-1], [])
+                        raw_rels[line[i-1]].append(line[i+1])
+                    break
+                    
+            #print "------------"
+        #print raw_rels
 
-with open("Pubmed-Diabetes.DIRECTED.cites.tab") as tsv:
-    for line in csv.reader(tsv, dialect="excel-tab"):
-        if ("DIRECTED" in line) or ("NO_FEATURES" in line):
-            continue
-        for i in range(len(line)):
-            #print line[i]
-            if "|" in line[i]:
-                if raw_rels.has_key(line[i-1]):
-                    raw_rels[line[i-1]].append(line[i+1])
-                else:
-                    raw_rels.setdefault(line[i-1], [])
-                    raw_rels[line[i-1]].append(line[i+1])
-                break
-                
-        #print "------------"
-    #print raw_rels
-
-adviceList = adviceFileReader("advice.txt")
-if len(adviceList) > 0:
-    for a in adviceList:
-        target = str.split(":-")[0]
-        body = str.split(":-")[1]
-        #process head
-        Tpname,Tterms = processLiteral(target)
-        
-        bodyArr = str.split(body,";")
-        for bodyLit in bodyArr:
-            Bpname, Bterms = processLiteral(bodyLit)
+for adv in adviceSet:
+    head = adv['h']
+    body = adv['b']
+    
+    print("head")
+    for p in head:
+        print(p)
+    
+    print("body")
+    for p in body:
+        print(p)
             
         
         
