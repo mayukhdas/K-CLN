@@ -50,9 +50,12 @@ def parseRel():
                         raw_rels.setdefault(line[i-1], [])
                         raw_rels[line[i-1]].append(line[i+1])
                     break
-                    
-            #print "------------"
-        #print raw_rels
+
+# ------------------------------------------------------------------------------------------------------
+# Declaring Masks for ADVICE
+# ------------------------------------------------------------------------------------------------------
+
+        
 
 for adv in adviceSet:
     
@@ -75,11 +78,9 @@ for adv in adviceSet:
     
     print("body")
     for p in body:
+        with open("Pubmed-Diabetes.NODE.paper.tab") as tsv:
+            for line in csv.reader(tsv, dialect="excel-tab"):
         print(p)
-    
-            
-        
-        
 
 
 
