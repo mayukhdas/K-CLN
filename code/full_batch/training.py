@@ -26,7 +26,7 @@ yidx = args['-y']
 if 'dr' in args['-reg']: dropout = True
 else: dropout = False
 feats, labels, rel_list, rel_mask, train_ids, valid_ids, test_ids = prepare_data.load_data(dataset)
-print len(train_ids), len(valid_ids), len(test_ids)
+print(len(train_ids), len(valid_ids), len(test_ids))
 labels = labels.astype('int64')
 if task == 'movie':
     labels = labels[:, yidx : yidx+1]
@@ -55,7 +55,7 @@ if 'movie' in task:
     n_classes = -labels.shape[-1]
 
 ########################## BUILD MODEL ###############################################
-print 'Building model ...'
+print('Building model ...')
 
 # create model: n_layers, hidden_dim, input_dim, n_rel, n_neigh, n_classes, shared
 

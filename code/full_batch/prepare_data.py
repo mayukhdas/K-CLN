@@ -69,7 +69,7 @@ def load_data(path):
     # print(cPickle.load(f))
     feats, labels, rel_list, train_ids, valid_ids, test_ids = cPickle.load(f)
     feats, labels = modData(feats,labels)
-    # print("features")
+    print("features")
     #print(feats.shape[0])
     # print("labels")
     # print(labels)

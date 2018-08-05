@@ -73,7 +73,7 @@ def parseRel():
 advice_entity_mask = []
 advice_relation_mask = []
     
-def parseAdvice():
+def parseAdvice(ent,adviceSet):
     for adv in adviceSet:
         
         isAdvGrounded = True
@@ -88,11 +88,35 @@ def parseAdvice():
         if len(head)>1:
             npref = head[1]
         targetEnt = npref[1]
+        preflabel = npref[2]
         
         if(targetEnt.startswith("?")):
             isAdvGrounded = None
         
-        
+        match = None
+        with open(ent) as tsv:
+            lineC = 0
+            for line in csv.reader(tsv, dialect="excel-tab"):
+                lineC = lineC+1
+                if "NODE" in line or lineC == 2:
+                    continue
+                if line[1] == preflabel:
+                    match = True
+                entitiesInQuestion = {}
+                for p in body:
+                    if(p[0]=="hasWord"):
+                        if(p[1]==targetEnt):
+                            if p[2] in line:
+                                advice_entity_mask[entity_list.index(line[0])]=1
+                            else:
+                                advice_entity_mask[entity_list.index(line[0])]=0
+                        else:
+                            entitiesInQuestion[p[1]] = 0
+                    else:
+                        if(p[1]==targetEnt):
+                            
+                         
+                        
         print("body")
         
             
