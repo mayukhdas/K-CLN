@@ -10,6 +10,7 @@ Created on Sat May 19 13:37:50 2018
 #import cPickle
 import gzip
 import csv
+import numpy as np
 from adviceFile import adviceSet
 
 path = '../data/' + "pubmed" + '.pkl.gz'
@@ -24,7 +25,9 @@ advicelist=[]
 word_list1=["urinari","insulin","kidney","genotyp","heart","glucose","insulindepend"]
 word_list2=["obes","fat","genotyp","heart,glucose"]
 word_list0=["genotyp","heart","glucose"]
-raw_rels = {}
+raw_rels = np.zeros((100,100))
+
+entity_list = []
 
 def adviceFileReader(file):
     lines = [line.rstrip('\n') for line in open(file)]
@@ -36,54 +39,69 @@ def processLiteral(lit):
     return name,terms
     
 
+def parseEntities(f):
+    with open(f) as tsv:
+        lineC = 0
+        for line in csv.reader(tsv, dialect="excel-tab"):
+            lineC = lineC+1
+            if "NODE" in line or lineC == 2:
+                continue
+            #print(lineC,"    ",line[0])
+            entity_list.append(line[0])
+                
+           
+
 def parseRel():
     with open("Pubmed-Diabetes.DIRECTED.cites.tab") as tsv:
+        count = 0
         for line in csv.reader(tsv, dialect="excel-tab"):
             if ("DIRECTED" in line) or ("NO_FEATURES" in line):
                 continue
+            print(line)
             for i in range(len(line)):
-                #print line[i]
                 if "|" in line[i]:
-                    if raw_rels.has_key(line[i-1]):
-                        raw_rels[line[i-1]].append(line[i+1])
-                    else:
-                        raw_rels.setdefault(line[i-1], [])
-                        raw_rels[line[i-1]].append(line[i+1])
-                    break
-
+                    source = str.split(line[i-1],":")[1]
+                    sink = str.split(line[i+1],":")[1]
+                    sourceidx = entity_list.index(source)
+                    sinkidx = entity_list.index(sink)
+                    raw_rels[sourceidx, sinkidx] = 1
+            count = count+1
+        print(count)
 # ------------------------------------------------------------------------------------------------------
 # Declaring Masks for ADVICE
 # ------------------------------------------------------------------------------------------------------
-
+advice_entity_mask = []
+advice_relation_mask = []
+    
+def parseAdvice():
+    for adv in adviceSet:
         
+        isAdvGrounded = True
+        
+        head = adv['h']
+        body = adv['b']
+        
+        targetEnt = '';
+        
+        print("head")
+        pref = head[0]
+        if len(head)>1:
+            npref = head[1]
+        targetEnt = npref[1]
+        
+        if(targetEnt.startswith("?")):
+            isAdvGrounded = None
+        
+        
+        print("body")
+        
+            
 
-for adv in adviceSet:
-    
-    isAdvGrounded = True
-    
-    head = adv['h']
-    body = adv['b']
-    
-    targetEnt = '';
-    
-    print("head")
-    pref = head[0]
-    if len(head)>1:
-        npref = head[1]
-    targetEnt = npref[1]
-    
-    if(targetEnt.startswith("?")):
-        isAdvGrounded = None
-    
-    
-    print("body")
-    for p in body:
-        with open("Pubmed-Diabetes.NODE.paper.tab") as tsv:
-            for line in csv.reader(tsv, dialect="excel-tab"):
-        print(p)
-
-
-
+print("Entities")
+parseEntities("Pubmed-Diabetes.NODE.paper.tab")
+raw_rels = np.zeros((len(entity_list),len(entity_list)))
+parseRel()
+print(np.count_nonzero(raw_rels))
 # =============================================================================
 # with open("Pubmed-Diabetes.NODE.paper.tab") as tsv:
 #     for line in csv.reader(tsv, dialect="excel-tab"):
