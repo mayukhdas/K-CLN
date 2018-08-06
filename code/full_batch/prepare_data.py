@@ -84,4 +84,4 @@ def load_data(path):
     print(feats[0])
     return feats, labels, rel_list, rel_mask, train_ids, valid_ids, test_ids
 
-load_data("../data/pubmed.pkl.gz")
+# load_data("../data/pubmed.pkl.gz")
