@@ -6,14 +6,13 @@ import numpy
 import read_pkl as rp
 import random
 
-path = '../data/' + 'pubmed' + '.pkl.gz'
+
 
 
 def sample_data(path, portion):
     f = gzip.open(path, 'rb')
-    # print(cPickle.load(f))
     feats, labels, rel_list, train_ids, valid_ids, test_ids = cPickle.load(f)
-    feats, labels = modData(feats,labels)
+    feats, labels = modData(feats, labels)
 
     train_ids_sample = random.sample(train_ids, int(len(train_ids)*portion))
     valid_ids_sample = random.sample(valid_ids, int(len(valid_ids)*portion))
@@ -38,17 +37,8 @@ def sample_data(path, portion):
         rel_item_tuple = list()
         rel_item_tuple.append(rel_item_0)
         rel_item_tuple.append(rel_item_1)
-        # print rel_item_tuple
         rel_list_sample.append(rel_item_tuple)
+    rel_list_sample, rel_mask_sample = create_mask(rel_list_sample)
 
+    return feats_sample, labels_sample, rel_list_sample, rel_mask_sample, train_ids_sample, valid_ids_sample, test_ids_sample
 
-
-    # print len(rel_list)
-
-
-    rel_list, rel_mask = create_mask(rel_list)
-    return
-
-    # return feats_sample, labels_sample, rel_list_sample, rel_mask_sample, train_ids_sample, valid_ids_sample, test_ids_sample
-
-sample_data(path, 0.1)
