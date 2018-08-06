@@ -45,7 +45,9 @@ def create_mask(rel_list):
 
     rel = numpy.zeros((n_nodes, n_rels, max_neigh), dtype='int64')
     mask = numpy.zeros((n_nodes, 2, n_rels, max_neigh), dtype='float32')
-
+    
+    #print(max_neigh)
+    
     for i, node in enumerate(rel_list):
         for j, r in enumerate(node):
             n = len(r)
@@ -68,14 +70,18 @@ def load_data(path):
     f = gzip.open(path, 'rb')
     # print(cPickle.load(f))
     feats, labels, rel_list, train_ids, valid_ids, test_ids = cPickle.load(f)
-    feats, labels = modData(feats,labels)
-    print("features")
-    #print(feats.shape[0])
+    #feats, labels = modData(feats,labels)
+    #print("features")
+    
     # print("labels")
     # print(labels)
     # labels[labels ==2] = 1
     # print(labels)
     #print(rp.entity_mul_new)
     rel_list, rel_mask = create_mask(rel_list)
-
+    
+    
+    print(feats[0])
     return feats, labels, rel_list, rel_mask, train_ids, valid_ids, test_ids
+
+load_data("../data/pubmed.pkl.gz")

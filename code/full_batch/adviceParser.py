@@ -71,6 +71,7 @@ def parseRel():
 # Declaring Masks for ADVICE
 # ------------------------------------------------------------------------------------------------------
 advice_entity_mask = []
+advice_entity_label = []
 advice_relation_mask = []
     
 def parseAdvice(ent,adviceSet):
@@ -102,6 +103,7 @@ def parseAdvice(ent,adviceSet):
                     continue
                 if line[1] == preflabel:
                     match = True
+                    
                 entitiesInQuestion = {}
                 for p in body:
                     if(p[0]=="hasWord"):

@@ -248,11 +248,13 @@ class GraphDense(Layer):
         context = context * mask_mul[:, :, :, None]
         context = K.sum(context, axis=-2) / K.sum(mask_div, axis=-1)[:, :, None]
         # -> now, context: n_nodes, n_rel, dim
-
+        
+        # Calculate indicator ---- MD
+        
         # dot(V, context)
         context = context[:, :, :, None] * self.V[None, :, :, :]
         context = K.sum(context, axis=(1, 2)) / self.mean
-        #context = K.dot(context, np.exp(np.subtract(Ipref,prefEffect)))##TODO - MD+DEV+YANG
+        context = K.dot(context, np.exp(np.subtract(Ipref,self.prefEffect)))##TODO - MD+DEV+YANG
         #
         # print("context   ", type(context))
         # print("x   ", type(x))
