@@ -46,7 +46,7 @@ def parseEntities(f):
             lineC = lineC+1
             if "NODE" in line or lineC == 2:
                 continue
-            print lineC,"    ",line[len(line)-2]
+            print(lineC,"    ",line[len(line)-2])
             entity_list.append(line[0])
                 
            
@@ -104,30 +104,45 @@ def parseAdvice(ent,adviceSet,feats,labels,rel_list):
                 if line[1] == preflabel:
                     match = True
                     
-                entitiesInQuestion = {}
-                entitiesInQuestionCon = {}
-                for p in body:
-                    if(p[0]=="hasWord"):
-                        if(p[1]==targetEnt):
-                            if isAdvGrounded is not None:
-                                if hasWordinEntity(ent,p[2],targetEnt):
-                                    advice_entity_mask[entity_list.index(targetEnt)] = 1
-                            else:
-                                if hasWordinEntity(ent,p[2],entity_list):
-                                    advice_entity_mask[:] = 1
-                        else:
-                            entitiesInQuestion[p[1]] = p[2]
-                            entitiesInQuestionCon[p[1]] = None
+        entitiesInQuestion = {}
+        entitiesInQuestionCon = {}
+        for p in body:
+            if(p[0]=="hasWord"):
+                if(p[1]==targetEnt):
+                    if isAdvGrounded is not None:
+                        if hasWordinEntity(ent,p[2],targetEnt):
+                            advice_entity_mask[entity_list.index(targetEnt)] = 1
                     else:
-                        if (p[1] == targetEnt or p[2] == targetEnt):
-                            print "here"
-                if len(entitiesInQuestion) > 0:
-                    for k in entitiesInQuestion.keys:
-                        if not str.startswith(k,"?"):
-                            if hasWordinEntity(ent, entitiesInQuestion[k], k) and ((raw_rels[entity_list.index(targetEnt), entity_list.index(k)]>0) or (raw_rels[entity_list.index(k), entity_list.index(targetEnt)]>0)):
-                                
+                        if hasWordinEntity(ent,p[2],entity_list):
+                            advice_entity_mask[:] = 1
+                else:
+                    entitiesInQuestion[p[1]] = p[2]
+                    entitiesInQuestionCon[p[1]] = None
+            else:
+                if targetEnt in p:
+                    entityinQ = None
+                    for i in range(1,3):
+                        if p[i] in entitiesInQuestionCon.keys:
+                            entitiesInQuestionCon[p[i]] = True
                             
-        
+                        
+        if len(entitiesInQuestion) > 0:
+            for k in entitiesInQuestion.keys:
+                if not str.startswith(k,"?"):
+                    if (hasWordinEntity(ent, entitiesInQuestion[k], k) is True) and (entitiesInQuestionCon[k] is True) and ((raw_rels[entity_list.index(targetEnt), entity_list.index(k)]>0) or (raw_rels[entity_list.index(k), entity_list.index(targetEnt)]>0)):
+                        rel = entity_list.index(targetEnt)
+                        idx = rel_list[rel,0].index(k)
+                        advice_relation_mask[rel,0,idx] = 1
+                else:
+                    nbrs = getNeighborList(targetEnt)
+                    
+                         
+                
+                                
+def getNeighborList(entity):
+    newL = [i for i, e in enumerate(raw_rels[entity_list.index(entity)]) if e != 0]
+    return newL
+
 def hasWordinEntity(nodefile,word,entity):
     ret = None
     with open(nodefile) as tsv:
