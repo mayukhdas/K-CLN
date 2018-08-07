@@ -74,8 +74,8 @@ advice_entity_mask = []
 advice_entity_label = []
 advice_relation_mask = []
     
-def parseAdvice(ent,adviceSet,feats,labels,rel_list):
-    for adv in adviceSet:
+def parseAdvice(ent,advice,feats,labels,rel_list):
+    for adv in advice:
         
         isAdvGrounded = True
         
@@ -104,39 +104,50 @@ def parseAdvice(ent,adviceSet,feats,labels,rel_list):
                 if line[1] == preflabel:
                     match = True
                     
-        entitiesInQuestion = {}
-        entitiesInQuestionCon = {}
-        for p in body:
-            if(p[0]=="hasWord"):
-                if(p[1]==targetEnt):
-                    if isAdvGrounded is not None:
-                        if hasWordinEntity(ent,p[2],targetEnt):
-                            advice_entity_mask[entity_list.index(targetEnt)] = 1
+        Target_entities = []
+        if isAdvGrounded is True:
+            Target_entities.append(targetEnt)
+        else:
+            Target_entities.append(entity_list)
+            
+        for targetEnt in Target_entities:
+            entitiesInQuestion = {}
+            entitiesInQuestionCon = {}
+            for p in body:
+                if(p[0]=="hasWord"):
+                    if(p[1]==targetEnt):
+                        if isAdvGrounded is not None:
+                            if hasWordinEntity(ent,p[2],targetEnt):
+                                advice_entity_mask[entity_list.index(targetEnt)] = 1
+                        else:
+                            if hasWordinEntity(ent,p[2],entity_list):
+                                advice_entity_mask[:] = 1
                     else:
-                        if hasWordinEntity(ent,p[2],entity_list):
-                            advice_entity_mask[:] = 1
+                        entitiesInQuestion[p[1]] = p[2]
+                        entitiesInQuestionCon[p[1]] = None
                 else:
-                    entitiesInQuestion[p[1]] = p[2]
-                    entitiesInQuestionCon[p[1]] = None
-            else:
-                if targetEnt in p:
-                    entityinQ = None
-                    for i in range(1,3):
-                        if p[i] in entitiesInQuestionCon.keys:
-                            entitiesInQuestionCon[p[i]] = True
+                    if targetEnt in p:
+                        entityinQ = None
+                        for i in range(1,3):
+                            if p[i] in entitiesInQuestionCon.keys:
+                                entitiesInQuestionCon[p[i]] = True
+                                
                             
-                        
-        if len(entitiesInQuestion) > 0:
-            for k in entitiesInQuestion.keys:
-                if not str.startswith(k,"?"):
-                    if (hasWordinEntity(ent, entitiesInQuestion[k], k) is True) and (entitiesInQuestionCon[k] is True) and ((raw_rels[entity_list.index(targetEnt), entity_list.index(k)]>0) or (raw_rels[entity_list.index(k), entity_list.index(targetEnt)]>0)):
-                        rel = entity_list.index(targetEnt)
-                        idx = rel_list[rel,0].index(k)
-                        advice_relation_mask[rel,0,idx] = 1
-                else:
-                    nbrs = getNeighborList(targetEnt)
-                    
-                         
+            if len(entitiesInQuestion) > 0:
+                for k in entitiesInQuestion.keys:
+                    if not str.startswith(k,"?"):
+                        if (hasWordinEntity(ent, entitiesInQuestion[k], k) is True) and (entitiesInQuestionCon[k] is True) and ((raw_rels[entity_list.index(targetEnt), entity_list.index(k)]>0) or (raw_rels[entity_list.index(k), entity_list.index(targetEnt)]>0)):
+                            rel = entity_list.index(targetEnt)
+                            idx = rel_list[rel,0].index(k)
+                            advice_relation_mask[rel,0,idx] = 1
+                    else:
+                        nbrsId = getNeighborList(targetEnt)
+                        nbrs= [entity_list[i] for i in nbrsId]
+                        for n in nbrs:
+                            if hasWordinEntity(ent,entitiesInQuestion[k],n):
+                                rel = entity_list.index(targetEnt)
+                                idx = rel_list[rel,0].index(n)
+                                advice_relation_mask[rel,0,idx] = 1
                 
                                 
 def getNeighborList(entity):
@@ -153,12 +164,16 @@ def hasWordinEntity(nodefile,word,entity):
     return ret
 
 
-print("Entities")
-parseEntities("Pubmed-Diabetes.NODE.paper.tab")
+def getAdvice(nodeFile,relFile,feats,labels,rel_list):
+    parseEntities(nodeFile)
+    parseRel(relFile)
+    parseAdvice(nodeFile,adviceSet,feats,labels,rel_list)
+    return(advice_entity_mask, advice_entity_label, advice_relation_mask)
+
+
 #raw_rels = np.zeros((len(entity_list),len(entity_list)))
 #parseRel()
 #print(np.count_nonzero(raw_rels))
-print(entity_list[19716])
 # =============================================================================
 # with open("Pubmed-Diabetes.NODE.paper.tab") as tsv:
 #     for line in csv.reader(tsv, dialect="excel-tab"):
