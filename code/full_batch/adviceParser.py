@@ -105,6 +105,7 @@ def parseAdvice(ent,adviceSet,feats,labels,rel_list):
                     match = True
                     
                 entitiesInQuestion = {}
+                entitiesInQuestionCon = {}
                 for p in body:
                     if(p[0]=="hasWord"):
                         if(p[1]==targetEnt):
@@ -115,7 +116,16 @@ def parseAdvice(ent,adviceSet,feats,labels,rel_list):
                                 if hasWordinEntity(ent,p[2],entity_list):
                                     advice_entity_mask[:] = 1
                         else:
-                            entitiesInQuestion[p[1]] = True
+                            entitiesInQuestion[p[1]] = p[2]
+                            entitiesInQuestionCon[p[1]] = None
+                    else:
+                        if (p[1] == targetEnt or p[2] == targetEnt):
+                            print "here"
+                if len(entitiesInQuestion) > 0:
+                    for k in entitiesInQuestion.keys:
+                        if not str.startswith(k,"?"):
+                            if hasWordinEntity(ent, entitiesInQuestion[k], k) and ((raw_rels[entity_list.index(targetEnt), entity_list.index(k)]>0) or (raw_rels[entity_list.index(k), entity_list.index(targetEnt)]>0)):
+                                
                             
         
 def hasWordinEntity(nodefile,word,entity):
@@ -124,7 +134,7 @@ def hasWordinEntity(nodefile,word,entity):
         for line in csv.reader(tsv, dialect="excel-tab"):
             if (line[0] in entity):
                 if word in line:
-                    ret = true
+                    ret = True
     return ret
 
 
