@@ -81,7 +81,7 @@ def load_data(path):
     rel_list, rel_mask = create_mask(rel_list)
     
     
-    print(feats[0])
+    print(rel_list[19716])
     return feats, labels, rel_list, rel_mask, train_ids, valid_ids, test_ids
 
 load_data("../data/pubmed.pkl.gz")

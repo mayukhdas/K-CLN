@@ -46,7 +46,7 @@ def parseEntities(f):
             lineC = lineC+1
             if "NODE" in line or lineC == 2:
                 continue
-            #print(lineC,"    ",line[0])
+            print lineC,"    ",line[len(line)-2]
             entity_list.append(line[0])
                 
            
@@ -74,7 +74,7 @@ advice_entity_mask = []
 advice_entity_label = []
 advice_relation_mask = []
     
-def parseAdvice(ent,adviceSet):
+def parseAdvice(ent,adviceSet,feats,labels,rel_list):
     for adv in adviceSet:
         
         isAdvGrounded = True
@@ -108,26 +108,32 @@ def parseAdvice(ent,adviceSet):
                 for p in body:
                     if(p[0]=="hasWord"):
                         if(p[1]==targetEnt):
-                            if p[2] in line:
-                                advice_entity_mask[entity_list.index(line[0])]=1
+                            if isAdvGrounded is not None:
+                                if hasWordinEntity(ent,p[2],targetEnt):
+                                    advice_entity_mask[entity_list.index(targetEnt)] = 1
                             else:
-                                advice_entity_mask[entity_list.index(line[0])]=0
+                                if hasWordinEntity(ent,p[2],entity_list):
+                                    advice_entity_mask[:] = 1
                         else:
-                            entitiesInQuestion[p[1]] = 0
-                    else:
-                        if(p[1]==targetEnt):
+                            entitiesInQuestion[p[1]] = True
                             
-                         
-                        
-        print("body")
         
-            
+def hasWordinEntity(nodefile,word,entity):
+    ret = None
+    with open(nodefile) as tsv:
+        for line in csv.reader(tsv, dialect="excel-tab"):
+            if (line[0] in entity):
+                if word in line:
+                    ret = true
+    return ret
+
 
 print("Entities")
 parseEntities("Pubmed-Diabetes.NODE.paper.tab")
-raw_rels = np.zeros((len(entity_list),len(entity_list)))
-parseRel()
-print(np.count_nonzero(raw_rels))
+#raw_rels = np.zeros((len(entity_list),len(entity_list)))
+#parseRel()
+#print(np.count_nonzero(raw_rels))
+print(entity_list[19716])
 # =============================================================================
 # with open("Pubmed-Diabetes.NODE.paper.tab") as tsv:
 #     for line in csv.reader(tsv, dialect="excel-tab"):
