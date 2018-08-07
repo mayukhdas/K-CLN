@@ -233,6 +233,9 @@ class GraphDense(Layer):
         # print("x in the call ",x.shape)
         rel = inputs[1] # n_nodes, n_rel, n_neigh
         rel_mask = inputs[2]
+        Iadv = inputs[3]
+        W_adv_mask = inputs[4]
+        c_adv_mask = inputs[5]
         mask_mul = rel_mask[:, 0]
         mask_div = rel_mask[:, 1]
 

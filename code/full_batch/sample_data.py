@@ -4,11 +4,12 @@ import cPickle
 import numpy
 import read_pkl as rp
 import random
+#import adviceParser as ap
 
 
 
 
-def sample_data(path, portion):
+def sample_data(path, pathNode, pathRel, portion):
     f = gzip.open(path, 'rb')
     feats, labels, rel_list, train_ids, valid_ids, test_ids = cPickle.load(f)
     feats, labels = prepare_data.modData(feats, labels)
@@ -38,10 +39,14 @@ def sample_data(path, portion):
     #     rel_item_tuple.append(rel_item_1)
     #     rel_list_sample.append(rel_item_tuple)
     # rel_list_sample, rel_mask_sample = prepare_data.create_mask(rel_list_sample)
+    #I_adv,W_adv_mask,c_adv_mask = ap.getAdvice(pathNode,pathRel,feats,labels,rel_list)    
     rel_list, rel_mask = prepare_data.create_mask(rel_list)
-
+    
+    n_nodes, n_rel, n_neigh = rel_list.shape # number of nodes, number of relation types, number of neighbors for each type of relations
+    dim = feats.shape[-1]
+    print(feats[rel_list.flatten()].reshape([n_nodes, n_rel, n_neigh, dim]))
     # return feats_sample, labels_sample, rel_list_sample, rel_mask_sample, train_ids_sample, valid_ids_sample, test_ids_sample
-    return feats, labels, rel_list, rel_mask, train_ids_sample, valid_ids_sample, test_ids_sample
+    return feats, labels, rel_list, rel_mask, train_ids_sample, valid_ids_sample, test_ids_sample, None, None, None
 
 
 

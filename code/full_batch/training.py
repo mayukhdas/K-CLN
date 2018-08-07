@@ -1,6 +1,7 @@
 import numpy
 import sys
 import prepare_data
+import sample_data as sd
 args = prepare_data.arg_passing(sys.argv)
 seed = args['-seed']
 numpy.random.seed(seed)
@@ -16,6 +17,8 @@ elif 'movie' in dataset:
     task = 'movie'
 
 dataset = '../data/' + dataset + '.pkl.gz'
+nodeFile =  '../data/' + 'pubmed-Diabetes.NODE.paper.tab' #MD & Yang
+relFile = '../data/' + 'pubmed-Diabetes.DIRECTED.cites.tab' #MD & Yang
 modelType = args['-model']
 n_layers, dim = args['-nlayers'], args['-dim']
 shared = args['-shared']
@@ -25,7 +28,8 @@ yidx = args['-y']
 
 if 'dr' in args['-reg']: dropout = True
 else: dropout = False
-feats, labels, rel_list, rel_mask, train_ids, valid_ids, test_ids = prepare_data.load_data(dataset)
+#feats, labels, rel_list, rel_mask, train_ids, valid_ids, test_ids = prepare_data.load_data(dataset)
+feats, labels, rel_list, rel_mask, train_ids, valid_ids, test_ids, I_adv, W_adv_mask, c_adv_mask = sd.sample_data(dataset,nodeFile,relFile,0.4)
 print(len(train_ids), len(valid_ids), len(test_ids))
 labels = labels.astype('int64')
 if task == 'movie':
@@ -102,6 +106,6 @@ saveResult = SaveResult([[feats, rel_list, rel_mask], labels, train_ids, valid_i
 callbacks=[saveResult, NanStopping()]
 
 his = model.fit([feats, rel_list, rel_mask], train_y,
-                validation_data=([feats, rel_list, rel_mask], valid_y),
+                validation_data=([feats, rel_list, rel_mask, I_adv, W_adv_mask, c_adv_mask], valid_y),
                 nb_epoch=1000, batch_size=feats.shape[0], shuffle=False,
                 callbacks=callbacks)
