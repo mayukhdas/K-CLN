@@ -83,22 +83,22 @@ def parseAdvice(ent,advice,feats,labels,rel_list):
         head = adv['h']
         body = adv['b']
         
-        targetEnt = '';
+        targetEntGiven = '';
         
         print("head")
         if len(head)>1:
             npref = head[1]
-        targetEnt = npref[1]
+        targetEntGiven = npref[1]
         preflabel = npref[2]
         
-        if(targetEnt.startswith("?")):
+        if(targetEntGiven.startswith("?")):
             isAdvGrounded = None
         
         match = None
                    
         Target_entities = []
         if isAdvGrounded is True:
-            Target_entities.append(targetEnt)
+            Target_entities.append(targetEntGiven)
         else:
             Target_entities.append(entity_list)
             
@@ -111,7 +111,7 @@ def parseAdvice(ent,advice,feats,labels,rel_list):
                 advice_entity_label[index] = 0
             for p in body:
                 if(p[0]=="hasWord"):
-                    if(p[1]==targetEnt):
+                    if(p[1]==targetEnt) or (p[1]==targetEntGiven):
                         if isAdvGrounded is not None:
                             if hasWordinEntity(ent,p[2],targetEnt):
                                 advice_entity_mask[entity_list.index(targetEnt)] = 1
