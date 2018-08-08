@@ -23,7 +23,7 @@ entity_mul=[]
 label=[]
 advicelist=[]
 word_list1=["urinari","insulin","kidney","genotyp","heart","glucose","insulindepend"]
-word_list2=["obes","fat","genotyp","heart,glucose"]
+word_list2=["obes","fat","genotyp","heart","glucose"]
 word_list0=["genotyp","heart","glucose"]
 raw_rels = np.zeros((100,100))
 
