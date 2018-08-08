@@ -39,8 +39,9 @@ def sample_data(path, pathNode, pathRel, portion):
     #     rel_item_tuple.append(rel_item_1)
     #     rel_list_sample.append(rel_item_tuple)
     # rel_list_sample, rel_mask_sample = prepare_data.create_mask(rel_list_sample)
-    I_adv,W_adv_mask,c_adv_mask = ap.getAdvice(pathNode,pathRel,feats,labels,rel_list)    
+       
     rel_list, rel_mask = prepare_data.create_mask(rel_list)
+    I_adv,W_adv_mask,c_adv_mask = ap.getAdvice(pathNode,pathRel,feats,labels,rel_list) 
     
     #n_nodes, n_rel, n_neigh = rel_list.shape # number of nodes, number of relation types, number of neighbors for each type of relations
     #dim = feats.shape[-1]
