@@ -283,7 +283,7 @@ def create_dense(n_layers, hidden_dim, input_dim, n_rel, n_neigh, n_classes, sha
         #hidd_nodes = GraphDense(input_dim=hidden_dim, output_dim=hidden_dim, init=init,
                                 #n_rel=n_rel, mean=nmean, activation=act)([hidd_nodes, inp_rel, inp_rel_mask])
         hidd_nodes = GraphDense(input_dim=hidden_dim, output_dim=hidden_dim, init=init, prefEffect = tempTop,
-                                n_rel=n_rel, mean=nmean, activation=act)([hidd_nodes, inp_rel, inp_rel_mask])
+                                n_rel=n_rel, mean=nmean, activation=act)([hidd_nodes, inp_rel, inp_rel_mask, inp_I_adv, inp_W_adv_mask, inp_c_adv_mask])
         if dropout: hidd_nodes = Dropout(0.5)(hidd_nodes)
 
     top_nodes = Dense(output_dim=n_classes, input_dim=hidden_dim)(hidd_nodes)
