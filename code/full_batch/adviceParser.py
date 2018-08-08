@@ -150,6 +150,7 @@ def parseAdvice(ent,advice,feats,labels,rel_list):
                 
                                 
 def getNeighborList(entity):
+    print(entity)
     if entity >= len(entity_list):
         raise Exception("index out of bound")
     elif entity_list.index(entity) not in raw_rels:
