@@ -229,9 +229,6 @@ class GraphDense(Layer):
         return (None, self.output_dim)
 
     def call(self, inputs, mask=None):
-        print(inputs[0].shape)
-        print(inputs[1].shape)
-        print(inputs[2].shape)
         x = inputs[0] #feature matrix
         # print("x in the call ",x.shape)
         rel = inputs[1] # n_nodes, n_rel, n_neigh
