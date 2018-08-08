@@ -133,7 +133,7 @@ def parseAdvice(ent,advice,feats,labels,rel_list):
                                 
                             
             if len(entitiesInQuestion) > 0:
-                for k in entitiesInQuestion.keys:
+                for k in entitiesInQuestion:
                     if not str.startswith(k,"?"):
                         if (hasWordinEntity(ent, entitiesInQuestion[k], k) is True) and (entitiesInQuestionCon[k] is True) and ((raw_rels[entity_list.index(targetEnt), entity_list.index(k)]>0) or (raw_rels[entity_list.index(k), entity_list.index(targetEnt)]>0)):
                             rel = entity_list.index(targetEnt)
