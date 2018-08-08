@@ -249,10 +249,10 @@ class GraphDense(Layer):
         # print("n_rel",type(n_rel))
         context = x[rel.flatten()].reshape([n_nodes, n_rel, n_neigh, dim])
         context = context * mask_mul[:, :, :, None]
-        context = context * c_adv_mask[:, :, :, None] # MD & Yang
+        #context = context * c_adv_mask[:, :, :, None] # MD & Yang
         
         # Calculate indicator ---- MD
-        context = K.dot(context,np.exp(np.subtract(Iadv[:,None,None,None],self.prefEffect[:,None,None,None])))##TODO - MD+DEV+YANG
+        context = K.dot(context,np.exp(np.subtract(Iadv[:,None,None,None],self.prefEffect[:,None,None,None]) * c_adv_mask[:, :, :, None]))##doing - MD+DEV+YANG
         
         context = K.sum(context, axis=-2) / K.sum(mask_div, axis=-1)[:, :, None]
         # -> now, context: n_nodes, n_rel, dim
