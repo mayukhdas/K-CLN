@@ -85,7 +85,6 @@ def parseAdvice(ent,advice,feats,labels,rel_list):
         targetEnt = '';
         
         print("head")
-        pref = head[0]
         if len(head)>1:
             npref = head[1]
         targetEnt = npref[1]
@@ -95,24 +94,20 @@ def parseAdvice(ent,advice,feats,labels,rel_list):
             isAdvGrounded = None
         
         match = None
-        with open(ent) as tsv:
-            lineC = 0
-            for line in csv.reader(tsv, dialect="excel-tab"):
-                lineC = lineC+1
-                if "NODE" in line or lineC == 2:
-                    continue
-                if line[1] == preflabel:
-                    match = True
-                    
+                   
         Target_entities = []
         if isAdvGrounded is True:
             Target_entities.append(targetEnt)
         else:
             Target_entities.append(entity_list)
             
-        for targetEnt in Target_entities:
+        for index, targetEnt in enumerate(Target_entities):
             entitiesInQuestion = {}
             entitiesInQuestionCon = {}
+            if labels[index] == preflabel:
+                advice_entity_label[index] = 1
+            else:
+                advice_entity_label[index] = 0
             for p in body:
                 if(p[0]=="hasWord"):
                     if(p[1]==targetEnt):
@@ -168,7 +163,7 @@ def getAdvice(nodeFile,relFile,feats,labels,rel_list):
     parseEntities(nodeFile)
     parseRel(relFile)
     parseAdvice(nodeFile,adviceSet,feats,labels,rel_list)
-    return(advice_entity_mask, advice_entity_label, advice_relation_mask)
+    return(advice_entity_label, advice_entity_mask, advice_relation_mask)
 
 
 #raw_rels = np.zeros((len(entity_list),len(entity_list)))

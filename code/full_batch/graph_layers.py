@@ -233,9 +233,9 @@ class GraphDense(Layer):
         # print("x in the call ",x.shape)
         rel = inputs[1] # n_nodes, n_rel, n_neigh
         rel_mask = inputs[2]
-        Iadv = inputs[3]
-        W_adv_mask = inputs[4]
-        c_adv_mask = inputs[5]
+        Iadv = np.array(inputs[3])
+        W_adv_mask = np.array(inputs[4])
+        c_adv_mask = np.array(inputs[5])
         mask_mul = rel_mask[:, 0]
         mask_div = rel_mask[:, 1]
 
@@ -249,9 +249,10 @@ class GraphDense(Layer):
         # print("n_rel",type(n_rel))
         context = x[rel.flatten()].reshape([n_nodes, n_rel, n_neigh, dim])
         context = context * mask_mul[:, :, :, None]
+        context = context * c_adv_mask[:, :, :, None] # MD & Yang
         
         # Calculate indicator ---- MD
-        context = K.dot(context, np.exp(np.subtract(Ipref,self.prefEffect)))##TODO - MD+DEV+YANG
+        context = K.dot(context,np.exp(np.subtract(Iadv[:,None,None,None],self.prefEffect[:,None,None,None])))##TODO - MD+DEV+YANG
         
         context = K.sum(context, axis=-2) / K.sum(mask_div, axis=-1)[:, :, None]
         # -> now, context: n_nodes, n_rel, dim
