@@ -167,7 +167,7 @@ def getAdvice(nodeFile,relFile,feats,labels,rel_list):
     parseEntities(nodeFile)
     parseRel(relFile)
     parseAdvice(nodeFile,adviceSet,feats,labels,rel_list)
-    return(advice_entity_label, advice_entity_mask, advice_relation_mask)
+    return advice_entity_label, advice_entity_mask, advice_relation_mask
 
 
 #raw_rels = np.zeros((len(entity_list),len(entity_list)))
