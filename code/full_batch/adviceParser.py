@@ -150,7 +150,12 @@ def parseAdvice(ent,advice,feats,labels,rel_list):
                 
                                 
 def getNeighborList(entity):
-    newL = [i for i, e in enumerate(raw_rels[entity_list.index(entity)]) if e != 0]
+    if entity >= len(entity_list):
+        raise Exception("index out of bound")
+    elif entity_list.index(entity) not in raw_rels:
+        raise Exception("entity not in raw_rel")
+    else:
+        newL = [i for i, e in enumerate(raw_rels[entity_list.index(entity)]) if e != 0]
     return newL
 
 def hasWordinEntity(nodefile,word,entity):
