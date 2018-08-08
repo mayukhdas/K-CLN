@@ -52,6 +52,7 @@ def parseEntities(f):
            
 
 def parseRel(relFile):
+    raw_rels = np.zeros((len(entity_list), len(entity_list)))
     with open(relFile) as tsv:
         count = 0
         for line in csv.reader(tsv, dialect="excel-tab"):
