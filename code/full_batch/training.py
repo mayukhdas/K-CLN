@@ -100,6 +100,9 @@ f = open(fResult, 'w')
 f.write('Training log:\n')
 f.close()
 print("after log")
+I_adv = numpy.array(I_adv)
+W_adv_mask = numpy.array(W_adv_mask)
+c_adv_mask = numpy.array(c_adv_mask)
 saveResult = SaveResult([[feats, rel_list, rel_mask, I_adv, W_adv_mask, c_adv_mask], labels, train_ids, valid_ids, test_ids],
                         task=task, fileResult=fResult, fileParams=fParams)
 
