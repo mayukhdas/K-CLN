@@ -51,8 +51,8 @@ def parseEntities(f):
                 
            
 
-def parseRel():
-    with open("Pubmed-Diabetes.DIRECTED.cites.tab") as tsv:
+def parseRel(relFile):
+    with open(relFile) as tsv:
         count = 0
         for line in csv.reader(tsv, dialect="excel-tab"):
             if ("DIRECTED" in line) or ("NO_FEATURES" in line):
