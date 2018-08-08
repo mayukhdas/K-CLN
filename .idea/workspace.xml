@@ -21,11 +21,30 @@
       <file leaf-file-name="sample_data.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/code/full_batch/sample_data.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="494">
-              <caret line="53" column="173" lean-forward="false" selection-start-line="53" selection-start-column="173" selection-end-line="53" selection-end-column="173" />
+            <state relative-caret-position="509">
+              <caret line="54" column="47" lean-forward="true" selection-start-line="54" selection-start-column="47" selection-end-line="54" selection-end-column="47" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="training_instruction.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/code/training_instruction.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="450">
+              <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="99" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Pubmed-Diabetes.NODE.paper.tab" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/code/full_batch/Pubmed-Diabetes.NODE.paper.tab">
+          <provider selected="true" editor-type-id="LargeFileEditor">
+            <state relative-caret-position="-20534">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
             </state>
           </provider>
         </entry>
@@ -37,7 +56,7 @@
               <caret line="88" column="23" lean-forward="true" selection-start-line="88" selection-start-column="23" selection-end-line="88" selection-end-column="23" />
               <folding>
                 <element signature="e#127#138#0" expanded="true" />
-                <marker date="1533682120175" expanded="true" signature="6080:7635" ph="..." />
+                <marker date="1533686439517" expanded="true" signature="5930:7485" ph="..." />
               </folding>
             </state>
           </provider>
@@ -68,10 +87,15 @@
       <file leaf-file-name="graph_layers.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code/full_batch/graph_layers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1530">
-              <caret line="102" column="74" lean-forward="true" selection-start-line="102" selection-start-column="74" selection-end-line="102" selection-end-column="74" />
+            <state relative-caret-position="-1868">
+              <caret line="105" column="46" lean-forward="true" selection-start-line="105" selection-start-column="46" selection-end-line="105" selection-end-column="46" />
               <folding>
                 <element signature="e#0#48#0" expanded="true" />
+                <marker date="1533686439518" expanded="true" signature="9470:11615" ph="..." />
+                <marker date="1533686439518" expanded="true" signature="10667:10749" ph="..." />
+                <marker date="1533686439518" expanded="true" signature="10890:11305" ph="..." />
+                <marker date="1533686439518" expanded="true" signature="11431:11598" ph="..." />
+                <marker date="1533686439518" expanded="true" signature="11661:12469" ph="..." />
               </folding>
             </state>
           </provider>
@@ -107,8 +131,9 @@
     <findStrings>
       <find>feats</find>
       <find>task</find>
-      <find>model</find>
       <find>flatten</find>
+      <find>model</find>
+      <find>None]</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -374,16 +399,8 @@
           <caret line="88" column="23" lean-forward="true" selection-start-line="88" selection-start-column="23" selection-end-line="88" selection-end-column="23" />
           <folding>
             <element signature="e#127#138#0" expanded="true" />
-            <marker date="1533682120175" expanded="true" signature="6080:7635" ph="..." />
+            <marker date="1533686439517" expanded="true" signature="5930:7485" ph="..." />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/training_instruction.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="99" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -434,6 +451,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/code/full_batch/Pubmed-Diabetes.NODE.paper.tab">
+      <provider selected="true" editor-type-id="LargeFileEditor">
+        <state relative-caret-position="-20534">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/code/full_batch/training.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="59">
@@ -446,18 +470,31 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/code/full_batch/graph_layers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1530">
-          <caret line="102" column="74" lean-forward="true" selection-start-line="102" selection-start-column="74" selection-end-line="102" selection-end-column="74" />
+        <state relative-caret-position="-1868">
+          <caret line="105" column="46" lean-forward="true" selection-start-line="105" selection-start-column="46" selection-end-line="105" selection-end-column="46" />
           <folding>
             <element signature="e#0#48#0" expanded="true" />
+            <marker date="1533686439518" expanded="true" signature="9470:11615" ph="..." />
+            <marker date="1533686439518" expanded="true" signature="10667:10749" ph="..." />
+            <marker date="1533686439518" expanded="true" signature="10890:11305" ph="..." />
+            <marker date="1533686439518" expanded="true" signature="11431:11598" ph="..." />
+            <marker date="1533686439518" expanded="true" signature="11661:12469" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/training_instruction.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="99" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/code/full_batch/sample_data.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="494">
-          <caret line="53" column="173" lean-forward="false" selection-start-line="53" selection-start-column="173" selection-end-line="53" selection-end-column="173" />
+        <state relative-caret-position="509">
+          <caret line="54" column="47" lean-forward="true" selection-start-line="54" selection-start-column="47" selection-end-line="54" selection-end-column="47" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>

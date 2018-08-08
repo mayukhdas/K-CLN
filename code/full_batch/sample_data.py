@@ -4,7 +4,7 @@ import cPickle
 import numpy
 import read_pkl as rp
 import random
-#import adviceParser as ap
+import adviceParser as ap
 
 
 
@@ -51,5 +51,5 @@ def sample_data(path, pathNode, pathRel, portion):
 
 
 
-feats_sample, labels_sample, rel_list_sample, rel_mask_sample, train_ids_sample, valid_ids_sample, test_ids_sample = sample_data('../data/' + 'pubmed' + '.pkl.gz',None, None, 0.01)
+# feats_sample, labels_sample, rel_list_sample, rel_mask_sample, train_ids_sample, valid_ids_sample, test_ids_sample = sample_data('../data/' + 'pubmed' + '.pkl.gz',None, None, 0.01)
 # print feats_sample.shape, labels_sample.shape
