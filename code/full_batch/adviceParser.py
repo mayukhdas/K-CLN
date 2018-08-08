@@ -88,7 +88,7 @@ def parseAdvice(ent,advice,feats,labels,rel_list):
         
         targetEntGiven = '';
         
-        print("head ", head, "body ",body)
+        print("head")
         if len(head)>0:
             npref = head[0]
         targetEntGiven = npref[1]
@@ -104,9 +104,8 @@ def parseAdvice(ent,advice,feats,labels,rel_list):
             Target_entities.append(targetEntGiven)
         else:
             Target_entities.extend(entity_list)
-
+            
         for index, targetEnt in enumerate(Target_entities):
-            print(targetEnt, index," / ",len(Target_entities))
             entitiesInQuestion = {}
             entitiesInQuestionCon = {}
             if labels[index] == preflabel:
