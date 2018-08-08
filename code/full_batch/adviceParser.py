@@ -46,7 +46,7 @@ def parseEntities(f):
             lineC = lineC+1
             if "NODE" in line or lineC == 2:
                 continue
-            print(lineC,"    ",line[len(line)-2])
+            #print(lineC,"    ",line[len(line)-2])
             entity_list.append(line[0])
                 
            
@@ -58,7 +58,7 @@ def parseRel(relFile):
         for line in csv.reader(tsv, dialect="excel-tab"):
             if ("DIRECTED" in line) or ("NO_FEATURES" in line):
                 continue
-            print(line)
+            #print(line)
             for i in range(len(line)):
                 if "|" in line[i]:
                     source = str.split(line[i-1],":")[1]
