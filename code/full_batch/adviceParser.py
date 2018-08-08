@@ -103,7 +103,7 @@ def parseAdvice(ent,advice,feats,labels,rel_list):
         if isAdvGrounded is True:
             Target_entities.append(targetEntGiven)
         else:
-            Target_entities.append(entity_list)
+            Target_entities.extend(entity_list)
             
         for index, targetEnt in enumerate(Target_entities):
             entitiesInQuestion = {}
