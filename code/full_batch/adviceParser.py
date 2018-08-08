@@ -76,6 +76,9 @@ advice_entity_label = []
 advice_relation_mask = []
     
 def parseAdvice(ent,advice,feats,labels,rel_list):
+    advice_entity_mask = np.zeros(len(labels))
+    advice_entity_label = np.zeros(len(labels))
+    advice_relation_mask = np.zeros(rel_list.shape)
     for adv in advice:
         
         isAdvGrounded = True
