@@ -86,8 +86,8 @@ def parseAdvice(ent,advice,feats,labels,rel_list):
         targetEntGiven = '';
         
         print("head")
-        if len(head)>1:
-            npref = head[1]
+        if len(head)>0:
+            npref = head[0]
         targetEntGiven = npref[1]
         preflabel = npref[2]
         
