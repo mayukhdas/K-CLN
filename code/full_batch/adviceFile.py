@@ -10,3 +10,4 @@ adviceSet = [{'h':[['label','?e','1']], 'b':[['hasWord','?e', 'insulin']]}, #adv
              {'h':[['label','?e','1']], 'b':[['hasWord','?e', 'kidney']]}, #advice3
              {'h':[['label','?e','1']], 'b':[['hasWord','?e2', 'kidney'],['hasWord','?e2', 'insulin'],['cites','?e','?e2']]}, #advice4 
              ]
+
