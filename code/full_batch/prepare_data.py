@@ -72,7 +72,7 @@ def load_data(path):
     feats, labels, rel_list, train_ids, valid_ids, test_ids = cPickle.load(f)
     #feats, labels = modData(feats,labels)
     #print("features")
-    
+    #print(rel_list[19716])
     # print("labels")
     # print(labels)
     # labels[labels ==2] = 1
@@ -81,7 +81,7 @@ def load_data(path):
     rel_list, rel_mask = create_mask(rel_list)
     
     
-    print(rel_list[19716])
+    #print(rel_list[19716])
     return feats, labels, rel_list, rel_mask, train_ids, valid_ids, test_ids
 
-# load_data("../data/pubmed.pkl.gz")
+#load_data("../data/pubmed.pkl.gz")

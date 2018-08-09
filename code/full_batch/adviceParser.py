@@ -25,7 +25,7 @@ advicelist=[]
 word_list1=["urinari","insulin","kidney","genotyp","heart","glucose","insulindepend"]
 word_list2=["obes","fat","genotyp","heart","glucose"]
 word_list0=["genotyp","heart","glucose"]
-raw_rels = np.zeros((100,100))
+#raw_rels = np.zeros((100,100))
 
 entity_list = []
 
@@ -51,23 +51,25 @@ def parseEntities(f):
                 
            
 
-def parseRel(relFile):
-    raw_rels = np.zeros((len(entity_list), len(entity_list)))
-    with open(relFile) as tsv:
-        count = 0
-        for line in csv.reader(tsv, dialect="excel-tab"):
-            if ("DIRECTED" in line) or ("NO_FEATURES" in line):
-                continue
-            #print(line)
-            for i in range(len(line)):
-                if "|" in line[i]:
-                    source = str.split(line[i-1],":")[1]
-                    sink = str.split(line[i+1],":")[1]
-                    sourceidx = entity_list.index(source)
-                    sinkidx = entity_list.index(sink)
-                    raw_rels[sourceidx, sinkidx] = 1
-            count = count+1
-        print(count)
+# =============================================================================
+# def parseRel(relFile):
+#     raw_rels = np.zeros((len(entity_list), len(entity_list)))
+#     with open(relFile) as tsv:
+#         count = 0
+#         for line in csv.reader(tsv, dialect="excel-tab"):
+#             if ("DIRECTED" in line) or ("NO_FEATURES" in line):
+#                 continue
+#             #print(line)
+#             for i in range(len(line)):
+#                 if "|" in line[i]:
+#                     source = str.split(line[i-1],":")[1]
+#                     sink = str.split(line[i+1],":")[1]
+#                     sourceidx = entity_list.index(source)
+#                     sinkidx = entity_list.index(sink)
+#                     raw_rels[sourceidx, sinkidx] = 1
+#             count = count+1
+#         print(count)
+# =============================================================================
 # ------------------------------------------------------------------------------------------------------
 # Declaring Masks for ADVICE
 # ------------------------------------------------------------------------------------------------------
@@ -135,12 +137,12 @@ def parseAdvice(ent,advice,feats,labels,rel_list):
             if len(entitiesInQuestion) > 0:
                 for k in entitiesInQuestion:
                     if not str.startswith(k,"?"):
-                        if (hasWordinEntity(ent, entitiesInQuestion[k], k) is True) and (entitiesInQuestionCon[k] is True) and ((raw_rels[entity_list.index(targetEnt), entity_list.index(k)]>0) or (raw_rels[entity_list.index(k), entity_list.index(targetEnt)]>0)):
+                        if (hasWordinEntity(ent, entitiesInQuestion[k], k) is True) and (entitiesInQuestionCon[k] is True) and ((entity_list.index(k) in rel_list[entity_list.index(targetEnt)][0]) or (entity_list.index(targetEnt) in rel_list[entity_list.index(k)][0])):
                             rel = entity_list.index(targetEnt)
                             idx = rel_list[rel,0].index(k)
                             advice_relation_mask[rel,0,idx] = 1
                     else:
-                        nbrsId = getNeighborList(targetEnt)
+                        nbrsId = getNeighborList(targetEnt,rel_list)
                         nbrs= [entity_list[i] for i in nbrsId]
                         for n in nbrs:
                             if hasWordinEntity(ent,entitiesInQuestion[k],n):
@@ -149,15 +151,16 @@ def parseAdvice(ent,advice,feats,labels,rel_list):
                                 advice_relation_mask[rel,0,idx] = 1
                 
                                 
-def getNeighborList(entity):
+def getNeighborList(entity, rel_list):
     print(entity)
-    if entity >= len(entity_list):
+    if entity not in entity_list:
         raise Exception("index out of bound")
-    elif entity_list.index(entity) not in raw_rels:
+    elif entity_list.index(entity) > len(rel_list):
         raise Exception("entity not in raw_rel")
     else:
-        newL = [i for i, e in enumerate(raw_rels[entity_list.index(entity)]) if e != 0]
-    return newL
+        newL = rel_list[entity_list.index(entity)][0]
+        ret = np.asarray(newL)
+    return [newL[i] for i in np.nonzero(ret)[0]]
 
 def hasWordinEntity(nodefile,word,entity):
     ret = None
