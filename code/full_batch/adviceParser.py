@@ -13,10 +13,6 @@ import csv
 import numpy as np
 from adviceFile import adviceSet
 
-path = '../data/' + "pubmed" + '.pkl.gz'
-
-f = gzip.open(path, 'rb')
-
 # unpickler = cPickle.Unpickler(f)
 # print(unpickler.load()[0])
 entity_mul=[]
