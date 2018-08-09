@@ -104,6 +104,7 @@ def parseAdvice(ent,advice,feats,labels,rel_list):
             Target_entities.extend(entity_list)
             
         for index, targetEnt in enumerate(Target_entities):
+            print(index, " / ", len(Target_entities))
             entitiesInQuestion = {}
             entitiesInQuestionCon = {}
             if labels[index] == preflabel:
@@ -170,7 +171,7 @@ def hasWordinEntity(nodefile,word,entity):
 
 def getAdvice(nodeFile,relFile,feats,labels,rel_list):
     parseEntities(nodeFile)
-    parseRel(relFile)
+    # parseRel(relFile)
     parseAdvice(nodeFile,adviceSet,feats,labels,rel_list)
     return advice_entity_label, advice_entity_mask, advice_relation_mask
 
