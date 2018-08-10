@@ -15,8 +15,6 @@ from adviceFile import adviceSet
 
 # unpickler = cPickle.Unpickler(f)
 # print(unpickler.load()[0])
-entity_mul=[]
-label=[]
 advicelist=[]
 word_list1=["urinari","insulin","kidney","genotyp","heart","glucose","insulindepend"]
 word_list2=["obes","fat","genotyp","heart","glucose"]
@@ -37,6 +35,7 @@ def processLiteral(lit):
     
 
 def parseEntities(f):
+    entity_list = []
     with open(f) as tsv:
         lineC = 0
         for line in csv.reader(tsv, dialect="excel-tab"):
@@ -96,8 +95,7 @@ def parseAdvice(ent,advice,feats,labels,rel_list,train):
         
         if(targetEntGiven.startswith("?")):
             isAdvGrounded = None
-        
-        match = None
+       
         #print train
         Target_entities = []
         if isAdvGrounded is True:
@@ -127,7 +125,6 @@ def parseAdvice(ent,advice,feats,labels,rel_list,train):
                         entitiesInQuestionCon[p[1]] = None
                 else:
                     if targetEnt in p:
-                        entityinQ = None
                         for i in range(1,3):
                             if p[i] in entitiesInQuestionCon.keys:
                                 entitiesInQuestionCon[p[i]] = True
@@ -160,6 +157,7 @@ def getNeighborList(entity, rel_list):
         newL = rel_list[entity_list.index(entity)][0]
         ret = np.asarray(newL)
     return [newL[i] for i in np.nonzero(ret)[0]]
+
 
 def hasWordinEntity(nodefile,word,entity):
     ret = None
