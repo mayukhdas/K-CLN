@@ -22,6 +22,7 @@ word_list0=["genotyp","heart","glucose"]
 #raw_rels = np.zeros((100,100))
 
 entity_list = []
+entity_whole_list = []
 
 
 def adviceFileReader(file):
@@ -36,15 +37,17 @@ def processLiteral(lit):
 
 def parseEntities(f):
     entityl = []
+    ewl = []
     with open(f) as tsv:
         lineC = 0
         for line in csv.reader(tsv, dialect="excel-tab"):
             lineC = lineC+1
             if "NODE" in line or lineC == 2:
                 continue
-            #print(lineC,"    ",line[len(line)-2])
-            entityl.extend(line[0])
-    return entityl
+            #print(line[0],"    ",line[len(line)-1])
+            entityl.append(line[0])
+            ewl.append([line[0],line[len(line)-1]])
+    return entityl,ewl
                 
            
 
@@ -99,13 +102,14 @@ def parseAdvice(ent,advice,feats,labels,rel_list,train):
         #print train
         Target_entities = []
         if isAdvGrounded is True:
-            Target_entities.extend(targetEntGiven)
+            Target_entities.append(targetEntGiven)
         else:
-            print entity_list[train[0]]
+            #print entity_list[train[0]]
             Target_entities.extend([entity_list[i] for i in train])
+        #print "list of targets", entity_list[train[10]], Target_entities
             
         for index, targetEnt in enumerate(Target_entities):
-            print(index, " / ", len(Target_entities))
+            #print(index, " / ", len(Target_entities))
             entitiesInQuestion = {}
             entitiesInQuestionCon = {}
             if labels[index] == preflabel:
@@ -115,12 +119,10 @@ def parseAdvice(ent,advice,feats,labels,rel_list,train):
             for p in body:
                 if(p[0]=="hasWord"):
                     if(p[1]==targetEnt) or (p[1]==targetEntGiven):
-                        if isAdvGrounded is not None:
-                            if hasWordinEntity(ent,p[2],targetEnt):
-                                advice_entity_mask[entity_list.index(targetEnt)] = 1
-                        else:
-                            if hasWordinEntity(ent,p[2],entity_list):
-                                advice_entity_mask[:] = 1
+                        #if isAdvGrounded is not None:
+                        #print "target", targetEnt
+                        if hasWordinEntity(ent,p[2],targetEnt):
+                            advice_entity_mask[entity_list.index(targetEnt)] = 1
                     else:
                         entitiesInQuestion[p[1]] = p[2]
                         entitiesInQuestionCon[p[1]] = None
@@ -130,13 +132,13 @@ def parseAdvice(ent,advice,feats,labels,rel_list,train):
                             if p[i] in entitiesInQuestionCon.keys:
                                 entitiesInQuestionCon[p[i]] = True
                                 
-                            
+            #print entitiesInQuestion          
             if len(entitiesInQuestion) > 0:
                 for k in entitiesInQuestion:
                     if not str.startswith(k,"?"):
                         if (hasWordinEntity(ent, entitiesInQuestion[k], k) is True) and (entitiesInQuestionCon[k] is True) and ((entity_list.index(k) in rel_list[entity_list.index(targetEnt)][0]) or (entity_list.index(targetEnt) in rel_list[entity_list.index(k)][0])):
                             rel = entity_list.index(targetEnt)
-                            idx = rel_list[rel,0].index(k)
+                            idx = rel_list[rel,0].tolist().index(k)
                             advice_relation_mask[rel,0,idx] = 1
                     else:
                         nbrsId = getNeighborList(targetEnt,rel_list)
@@ -144,12 +146,12 @@ def parseAdvice(ent,advice,feats,labels,rel_list,train):
                         for n in nbrs:
                             if hasWordinEntity(ent,entitiesInQuestion[k],n):
                                 rel = entity_list.index(targetEnt)
-                                idx = rel_list[rel,0].index(n)
+                                idx = rel_list[rel,0].tolist().index(n)
                                 advice_relation_mask[rel,0,idx] = 1
                 
                                 
 def getNeighborList(entity, rel_list):
-    print(entity)
+    #print(entity)
     if entity not in entity_list:
         raise Exception("index out of bound")
     elif entity_list.index(entity) > len(rel_list):
@@ -157,27 +159,33 @@ def getNeighborList(entity, rel_list):
     else:
         newL = rel_list[entity_list.index(entity)][0]
         ret = np.asarray(newL)
+        print ret
     return [newL[i] for i in np.nonzero(ret)[0]]
 
 
 def hasWordinEntity(nodefile,word,entity):
     ret = None
-    with open(nodefile) as tsv:
-        for line in csv.reader(tsv, dialect="excel-tab"):
-            if (line[0] in entity):
-                if word in line:
-                    ret = True
+    #print len(entity_whole_list)
+    #with open(nodefile) as tsv:
+    #for line in csv.reader(tsv, dialect="excel-tab"):
+    for line in entity_whole_list:
+        #print line[0],entity
+        if line[0]==entity:
+            if word in line[1]:
+                #print "found"
+                ret = True
     return ret
 
 
 def getAdvice(nodeFile,relFile,feats,labels,rel_list, train):
     global entity_list 
-    entity_list = parseEntities(nodeFile)
-    #print train
+    global entity_whole_list
+    entity_list, entity_whole_list = parseEntities(nodeFile)
+    #print entity_list
     # parseRel(relFile)
     parseAdvice(nodeFile,adviceSet,feats,labels,rel_list,train)
+    print advice_entity_label, advice_entity_mask, advice_relation_mask
     return advice_entity_label, advice_entity_mask, advice_relation_mask
-
 
 #raw_rels = np.zeros((len(entity_list),len(entity_list)))
 #parseRel()
