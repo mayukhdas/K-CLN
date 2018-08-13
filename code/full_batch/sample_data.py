@@ -9,7 +9,7 @@ import adviceParser as ap
 
 
 
-def sample_data(path, pathNode, pathRel, portion):
+def sample_data(path, pathNode, pathRel, portion=0.2):
     f = gzip.open(path, 'rb')
     feats, labels, rel_list, train_ids, valid_ids, test_ids = cPickle.load(f)
     feats, labels = prepare_data.modData(feats, labels)
