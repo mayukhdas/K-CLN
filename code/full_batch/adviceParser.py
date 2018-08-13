@@ -78,6 +78,9 @@ advice_entity_label = []
 advice_relation_mask = []
     
 def parseAdvice(ent,advice,feats,labels,rel_list,train):
+    global advice_entity_mask
+    global advice_entity_label
+    global advice_relation_mask
     advice_entity_mask = np.zeros(len(labels))
     advice_entity_label = np.zeros(len(labels))
     advice_relation_mask = np.zeros((np.array(rel_list)).shape)
@@ -112,7 +115,9 @@ def parseAdvice(ent,advice,feats,labels,rel_list,train):
             #print(index, " / ", len(Target_entities))
             entitiesInQuestion = {}
             entitiesInQuestionCon = {}
-            if labels[index] == preflabel:
+            index = entity_list.index(targetEnt)
+            #print labels[index], preflabel
+            if str(labels[index]) == str(preflabel):
                 advice_entity_label[index] = 1
             else:
                 advice_entity_label[index] = 0
@@ -184,7 +189,7 @@ def getAdvice(nodeFile,relFile,feats,labels,rel_list, train):
     #print entity_list
     # parseRel(relFile)
     parseAdvice(nodeFile,adviceSet,feats,labels,rel_list,train)
-    print advice_entity_label, advice_entity_mask, advice_relation_mask
+    print np.nonzero(advice_entity_label)
     return advice_entity_label, advice_entity_mask, advice_relation_mask
 
 #raw_rels = np.zeros((len(entity_list),len(entity_list)))
