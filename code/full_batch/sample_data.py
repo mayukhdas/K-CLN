@@ -41,7 +41,7 @@ def sample_data(path, pathNode, pathRel, portion=0.2):
     # rel_list_sample, rel_mask_sample = prepare_data.create_mask(rel_list_sample)
        
     rel_list, rel_mask = prepare_data.create_mask(rel_list)
-    I_adv,W_adv_mask,c_adv_mask = ap.getAdvice(pathNode,pathRel,feats,labels,rel_list) 
+    I_adv,W_adv_mask,c_adv_mask = ap.getAdvice(pathNode,pathRel,feats,labels,rel_list, train_ids_sample) 
     
     #n_nodes, n_rel, n_neigh = rel_list.shape # number of nodes, number of relation types, number of neighbors for each type of relations
     #dim = feats.shape[-1]
@@ -52,5 +52,5 @@ def sample_data(path, pathNode, pathRel, portion=0.2):
 
 
 
-# feats_sample, labels_sample, rel_list_sample, rel_mask_sample, train_ids_sample, valid_ids_sample, test_ids_sample = sample_data('../data/' + 'pubmed' + '.pkl.gz',None, None, 0.01)
-# print feats_sample.shape, labels_sample.shape
+feats_sample, labels_sample, rel_list_sample, rel_mask_sample, train_ids_sample, valid_ids_sample, test_ids_sample, I_adv,W_adv_mask,c_adv_mask = sample_data('../data/' + 'pubmed' + '.pkl.gz', '../data/' + 'pubmed-Diabetes.NODE.paper.tab', None, 0.01)
+print feats_sample.shape, labels_sample.shape

@@ -15,8 +15,6 @@ from adviceFile import adviceSet
 
 # unpickler = cPickle.Unpickler(f)
 # print(unpickler.load()[0])
-entity_mul=[]
-label=[]
 advicelist=[]
 word_list1=["urinari","insulin","kidney","genotyp","heart","glucose","insulindepend"]
 word_list2=["obes","fat","genotyp","heart","glucose"]
@@ -24,6 +22,7 @@ word_list0=["genotyp","heart","glucose"]
 #raw_rels = np.zeros((100,100))
 
 entity_list = []
+
 
 def adviceFileReader(file):
     lines = [line.rstrip('\n') for line in open(file)]
@@ -36,6 +35,7 @@ def processLiteral(lit):
     
 
 def parseEntities(f):
+    entity_list = []
     with open(f) as tsv:
         lineC = 0
         for line in csv.reader(tsv, dialect="excel-tab"):
@@ -44,6 +44,7 @@ def parseEntities(f):
                 continue
             #print(lineC,"    ",line[len(line)-2])
             entity_list.append(line[0])
+    return entity_list
                 
            
 
@@ -73,7 +74,7 @@ advice_entity_mask = []
 advice_entity_label = []
 advice_relation_mask = []
     
-def parseAdvice(ent,advice,feats,labels,rel_list):
+def parseAdvice(ent,advice,feats,labels,rel_list,train):
     advice_entity_mask = np.zeros(len(labels))
     advice_entity_label = np.zeros(len(labels))
     advice_relation_mask = np.zeros((np.array(rel_list)).shape)
@@ -94,16 +95,16 @@ def parseAdvice(ent,advice,feats,labels,rel_list):
         
         if(targetEntGiven.startswith("?")):
             isAdvGrounded = None
-        
-        match = None
-                   
+       
+        #print train
         Target_entities = []
         if isAdvGrounded is True:
             Target_entities.append(targetEntGiven)
         else:
-            Target_entities.extend(entity_list)
+            Target_entities.extend([entity_list[i] for i in train])
             
         for index, targetEnt in enumerate(Target_entities):
+            print(index, " / ", len(Target_entities))
             entitiesInQuestion = {}
             entitiesInQuestionCon = {}
             if labels[index] == preflabel:
@@ -124,7 +125,6 @@ def parseAdvice(ent,advice,feats,labels,rel_list):
                         entitiesInQuestionCon[p[1]] = None
                 else:
                     if targetEnt in p:
-                        entityinQ = None
                         for i in range(1,3):
                             if p[i] in entitiesInQuestionCon.keys:
                                 entitiesInQuestionCon[p[i]] = True
@@ -158,6 +158,7 @@ def getNeighborList(entity, rel_list):
         ret = np.asarray(newL)
     return [newL[i] for i in np.nonzero(ret)[0]]
 
+
 def hasWordinEntity(nodefile,word,entity):
     ret = None
     with open(nodefile) as tsv:
@@ -168,10 +169,10 @@ def hasWordinEntity(nodefile,word,entity):
     return ret
 
 
-def getAdvice(nodeFile,relFile,feats,labels,rel_list):
+def getAdvice(nodeFile,relFile,feats,labels,rel_list, train):
     parseEntities(nodeFile)
-    parseRel(relFile)
-    parseAdvice(nodeFile,adviceSet,feats,labels,rel_list)
+    # parseRel(relFile)
+    parseAdvice(nodeFile,adviceSet,feats,labels,rel_list,train)
     return advice_entity_label, advice_entity_mask, advice_relation_mask
 
 
