@@ -12,7 +12,7 @@ import adviceParser as ap
 def sample_data(path, pathNode, pathRel, portion=0.2):
     f = gzip.open(path, 'rb')
     feats, labels, rel_list, train_ids, valid_ids, test_ids = cPickle.load(f)
-    feats, labels = prepare_data.modData(feats, labels)
+    #feats, labels = prepare_data.modData(feats, labels)
 
     train_ids_sample = random.sample(train_ids, int(len(train_ids)*portion))
     valid_ids_sample = random.sample(valid_ids, int(len(valid_ids)*portion))

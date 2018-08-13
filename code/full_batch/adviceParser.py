@@ -35,7 +35,7 @@ def processLiteral(lit):
     
 
 def parseEntities(f):
-    entity_list = []
+    entityl = []
     with open(f) as tsv:
         lineC = 0
         for line in csv.reader(tsv, dialect="excel-tab"):
@@ -43,8 +43,8 @@ def parseEntities(f):
             if "NODE" in line or lineC == 2:
                 continue
             #print(lineC,"    ",line[len(line)-2])
-            entity_list.append(line[0])
-    return entity_list
+            entityl.extend(line[0])
+    return entityl
                 
            
 
@@ -99,8 +99,9 @@ def parseAdvice(ent,advice,feats,labels,rel_list,train):
         #print train
         Target_entities = []
         if isAdvGrounded is True:
-            Target_entities.append(targetEntGiven)
+            Target_entities.extend(targetEntGiven)
         else:
+            print entity_list[train[0]]
             Target_entities.extend([entity_list[i] for i in train])
             
         for index, targetEnt in enumerate(Target_entities):
@@ -170,7 +171,9 @@ def hasWordinEntity(nodefile,word,entity):
 
 
 def getAdvice(nodeFile,relFile,feats,labels,rel_list, train):
-    parseEntities(nodeFile)
+    global entity_list 
+    entity_list = parseEntities(nodeFile)
+    #print train
     # parseRel(relFile)
     parseAdvice(nodeFile,adviceSet,feats,labels,rel_list,train)
     return advice_entity_label, advice_entity_mask, advice_relation_mask
