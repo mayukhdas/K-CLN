@@ -138,7 +138,7 @@ def parseAdvice(ent,advice,feats,labels,rel_list,train):
                     if not str.startswith(k,"?"):
                         if (hasWordinEntity(ent, entitiesInQuestion[k], k) is True) and (entitiesInQuestionCon[k] is True) and ((entity_list.index(k) in rel_list[entity_list.index(targetEnt)][0]) or (entity_list.index(targetEnt) in rel_list[entity_list.index(k)][0])):
                             rel = entity_list.index(targetEnt)
-                            idx = rel_list[rel,0].tolist().index(k)
+                            idx = rel_list[rel,0].tolist().index(entity_list.index(k))
                             advice_relation_mask[rel,0,idx] = 1
                     else:
                         nbrsId = getNeighborList(targetEnt,rel_list)
@@ -146,7 +146,7 @@ def parseAdvice(ent,advice,feats,labels,rel_list,train):
                         for n in nbrs:
                             if hasWordinEntity(ent,entitiesInQuestion[k],n):
                                 rel = entity_list.index(targetEnt)
-                                idx = rel_list[rel,0].tolist().index(n)
+                                idx = rel_list[rel,0].tolist().index(entity_list.index(n))
                                 advice_relation_mask[rel,0,idx] = 1
                 
                                 
@@ -159,7 +159,7 @@ def getNeighborList(entity, rel_list):
     else:
         newL = rel_list[entity_list.index(entity)][0]
         ret = np.asarray(newL)
-        print ret
+        #print ret
     return [newL[i] for i in np.nonzero(ret)[0]]
 
 
