@@ -30,6 +30,9 @@ if 'dr' in args['-reg']: dropout = True
 else: dropout = False
 #feats, labels, rel_list, rel_mask, train_ids, valid_ids, test_ids = prepare_data.load_data(dataset)
 feats, labels, rel_list, rel_mask, train_ids, valid_ids, test_ids, I_adv, W_adv_mask, c_adv_mask = sd.sample_data(dataset,nodeFile,relFile,0.4)
+I_adv = numpy.array(I_adv)
+W_adv_mask = numpy.array(W_adv_mask)
+c_adv_mask = numpy.array(c_adv_mask)
 print(len(train_ids), len(valid_ids), len(test_ids))
 labels = labels.astype('int64')
 if task == 'movie':
@@ -68,7 +71,7 @@ if modelType == 'Highway':
                            n_rel=rel_list.shape[-2], n_neigh=rel_list.shape[-1],
                            n_classes=n_classes, shared=shared, nmean=nmean, dropout=dropout)
 elif modelType == 'Dense':
-    model = create_dense(n_layers=n_layers, hidden_dim=dim, input_dim=feats.shape[-1],
+    model = create_dense(n_layers=n_layers, hidden_dim=dim, input_dim=feats.shape[-1], adv_dim = I_adv.shape[-1],
                            n_rel=rel_list.shape[-2], n_neigh=rel_list.shape[-1],
                            n_classes=n_classes, shared=shared, nmean=nmean, dropout=dropout)
 else:
@@ -100,9 +103,7 @@ f = open(fResult, 'w')
 f.write('Training log:\n')
 f.close()
 print("after log")
-I_adv = numpy.array(I_adv)
-W_adv_mask = numpy.array(W_adv_mask)
-c_adv_mask = numpy.array(c_adv_mask)
+
 saveResult = SaveResult([[feats, rel_list, rel_mask, I_adv, W_adv_mask, c_adv_mask], labels, train_ids, valid_ids, test_ids],
                         task=task, fileResult=fResult, fileParams=fParams)
 

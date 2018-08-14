@@ -247,7 +247,7 @@ def create_resNet(n_layers, hidden_dim, input_dim, n_rel, n_neigh, n_classes, sh
     model = Model(input=[inp_nodes, inp_rel, inp_rel_mask], output=[top_nodes])
     return model
 
-def create_dense(n_layers, hidden_dim, input_dim, n_rel, n_neigh, n_classes, shared, nmean=1, dropout=True):
+def create_dense(n_layers, hidden_dim, input_dim, adv_dim, n_rel, n_neigh, n_classes, shared, nmean=1, dropout=True):
     act = 'relu'
     top_act = 'softmax' if n_classes > 1 else 'sigmoid'
     n_classes = abs(n_classes)
@@ -259,7 +259,7 @@ def create_dense(n_layers, hidden_dim, input_dim, n_rel, n_neigh, n_classes, sha
     inp_rel = Input(shape=(n_rel, n_neigh), dtype='int64', name='inp_rel')
     inp_rel_mask = Input(shape=(2, n_rel, n_neigh), dtype='float32', name='inp_rel_mask')
     #additional parameters for advice 
-    inp_I_adv = Input(shape=(1), dtype='float32', name='inp_I_adv')
+    inp_I_adv = Input(shape=(adv_dim,), dtype='float32', name='inp_I_adv')
     inp_W_adv_mask = Input(shape=(input_dim,), dtype='float32', name='inp_W_adv_mask')
     inp_c_adv_mask = Input(shape=(n_rel, n_neigh), dtype='float32', name='inp_c_adv_mask')
 
