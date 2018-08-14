@@ -266,7 +266,7 @@ class GraphDense(Layer):
         #
         # print("context   ", type(context))
         print("x   ", x.shape)
-        print("context: ", context.shape)
+        print("context: ", K.eval(context).shape)
         # print("W   ", type(self.W))
         # # print("this W")
         # # print(type(self.W))
