@@ -30,7 +30,7 @@ if 'dr' in args['-reg']: dropout = True
 else: dropout = False
 #feats, labels, rel_list, rel_mask, train_ids, valid_ids, test_ids = prepare_data.load_data(dataset)
 feats, labels, rel_list, rel_mask, train_ids, valid_ids, test_ids, I_adv, W_adv_mask, c_adv_mask = sd.sample_data(dataset,nodeFile,relFile,0.4)
-I_adv = numpy.array(I_adv)
+I_adv = numpy.array(I_adv).reshape((len(I_adv),1))
 W_adv_mask = numpy.array(W_adv_mask)
 c_adv_mask = numpy.array(c_adv_mask)
 print(len(train_ids), len(valid_ids), len(test_ids))
