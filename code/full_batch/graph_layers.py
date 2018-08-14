@@ -252,7 +252,7 @@ class GraphDense(Layer):
         #context = context * c_adv_mask[:, :, :, None] # MD & Yang
         
         # Calculate indicator ---- MD
-        context = context * np.exp(np.subtract(Iadv[:],self.prefEffect[:]) * c_adv_mask[:, :, :, None])##doing - MD+DEV+YANG
+        context = context * np.exp(np.dot(np.subtract(Iadv[:],self.prefEffect[:]),c_adv_mask[:, :, :, None]))##doing - MD+DEV+YANG
         
         context = K.sum(context, axis=-2) / K.sum(mask_div, axis=-1)[:, :, None]
         # -> now, context: n_nodes, n_rel, dim
