@@ -105,12 +105,12 @@ f.write('Training log:\n')
 f.close()
 print("after log")
 
-saveResult = SaveResult([[feats, rel_list, rel_mask, I_adv, W_adv_mask, c_adv_mask, None], labels, train_ids, valid_ids, test_ids],
+saveResult = SaveResult([[feats, rel_list, rel_mask, I_adv, W_adv_mask, c_adv_mask], labels, train_ids, valid_ids, test_ids],
                         task=task, fileResult=fResult, fileParams=fParams)
 
 callbacks=[saveResult, NanStopping()]
 
-his = model.fit([feats, rel_list, rel_mask, I_adv, W_adv_mask, c_adv_mask, None], train_y,
+his = model.fit([feats, rel_list, rel_mask, I_adv, W_adv_mask, c_adv_mask], train_y,
                 validation_data=([feats, rel_list, rel_mask, I_adv, W_adv_mask, c_adv_mask], valid_y),
                 nb_epoch=1000, batch_size=feats.shape[0], shuffle=False,
                 callbacks=callbacks)
