@@ -254,7 +254,7 @@ def create_dense(n_layers, hidden_dim, input_dim, adv_dim, n_rel, n_neigh, n_cla
     init = 'glorot_normal'
 
 
-
+    nc = numpy.zeros(n_classes).shape[-1]
     inp_nodes = Input(shape=(input_dim,), dtype='float32', name='inp_nodes')
     inp_rel = Input(shape=(n_rel, n_neigh), dtype='int64', name='inp_rel')
     inp_rel_mask = Input(shape=(2, n_rel, n_neigh), dtype='float32', name='inp_rel_mask')
@@ -262,7 +262,7 @@ def create_dense(n_layers, hidden_dim, input_dim, adv_dim, n_rel, n_neigh, n_cla
     inp_I_adv = Input(shape=(adv_dim,), dtype='float32', name='inp_I_adv')
     inp_W_adv_mask = Input(shape=(adv_dim,), dtype='float32', name='inp_W_adv_mask')
     inp_c_adv_mask = Input(shape=(n_rel, n_neigh), dtype='float32', name='inp_c_adv_mask')
-    tempTop = Input(shape=(n_classes), dtype='float32', name='inp_c_adv_mask')
+    tempTop = Input(shape=(nc), dtype='float32', name='temptop')
     # print("Nodes ", inp_nodes.shape)
     # print("Inp_rel: ",inp_rel.eval())
     # print("Inp_rel_mask",type(inp_rel_mask))
