@@ -252,7 +252,7 @@ class GraphDense(Layer):
         #context = context * c_adv_mask[:, :, :, None] # MD & Yang
         
         # Calculate indicator ---- MD
-        context = context * np.exp(np.dot(np.subtract(Iadv[:],self.prefEffect[:]),c_adv_mask[:, :, :, None]))##doing - MD+DEV+YANG
+        #context = context * np.exp(np.dot(np.subtract(Iadv[:],self.prefEffect[:]),c_adv_mask[:, :, :, None]))##doing - MD+DEV+YANG
         
         context = K.sum(context, axis=-2) / K.sum(mask_div, axis=-1)[:, :, None]
         # -> now, context: n_nodes, n_rel, dim
@@ -262,18 +262,20 @@ class GraphDense(Layer):
         context = context[:, :, :, None] * self.V[None, :, :, :]
         context = K.sum(context, axis=(1, 2)) / self.mean
         
+        
         #
         # print("context   ", type(context))
-        # print("x   ", type(x))
+        print("x   ", x.shape)
+        print("context: ", context.shape)
         # print("W   ", type(self.W))
         # # print("this W")
         # # print(type(self.W))
         # # print(K.eval(self.W))
-        # print("dimension of W:  ", K.eval(self.W).shape)
+        print("dimension of W:  ", K.eval(self.W).shape)
         # print("content of W:  ", K.eval(self.W))
         # print("this V")
         # print(type(self.V))
-        # print(K.eval(self.V).shape)
+        print("dimension of V:  ", K.eval(self.V).shape)
         
         h = K.dot(x, self.W) + context
         if self.bias:
