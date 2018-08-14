@@ -164,7 +164,7 @@ class GraphDense(Layer):
         self.activation = activations.get(activation)
         self.n_rel = n_rel
         self.mean = mean
-        self.prefEffect = prefEffect ### MD+DEV+YANG ---- additional Variables
+        #self.prefEffect = prefEffect ### MD+DEV+YANG ---- additional Variables
         self.W_regularizer = regularizers.get(W_regularizer)
         self.b_regularizer = regularizers.get(b_regularizer)
         self.activity_regularizer = regularizers.get(activity_regularizer)
