@@ -274,7 +274,7 @@ class GraphDense(Layer):
         # print("this V")
         # print(type(self.V))
         # print(K.eval(self.V).shape)
-
+        
         h = K.dot(x, self.W) + context
         if self.bias:
             h += self.b
