@@ -155,7 +155,6 @@ class GraphHighway(Layer):
 class GraphDense(Layer):
     def __init__(self, init='glorot_uniform',
                  n_rel=5, mean=1,
-                 prefEffect=None, ##MD+DEV+YANG
                  input_dim=None, output_dim=None,
                  activation='linear', weights=None,
                  W_regularizer=None, b_regularizer=None, activity_regularizer=None,
@@ -238,6 +237,7 @@ class GraphDense(Layer):
         c_adv_mask = inputs[5]
         mask_mul = rel_mask[:, 0]
         mask_div = rel_mask[:, 1]
+        prefEffect = inputs[6], ##MD+DEV+YANG
 
         n_nodes, n_rel, n_neigh = rel.shape # number of nodes, number of relation types, number of neighbors for each type of relations
         dim = x.shape[-1]
