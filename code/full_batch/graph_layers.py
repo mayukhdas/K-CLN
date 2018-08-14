@@ -250,6 +250,8 @@ class GraphDense(Layer):
         context = x[rel.flatten()].reshape([n_nodes, n_rel, n_neigh, dim])
         context = context * mask_mul[:, :, :, None]
         #context = context * c_adv_mask[:, :, :, None] # MD & Yang
+        print("x   ", x.shape)
+        print("context: ", )
         
         # Calculate indicator ---- MD
         #context = context * np.exp(np.dot(np.subtract(Iadv[:],self.prefEffect[:]),c_adv_mask[:, :, :, None]))##doing - MD+DEV+YANG
@@ -265,8 +267,7 @@ class GraphDense(Layer):
         
         #
         # print("context   ", type(context))
-        print("x   ", x.shape)
-        print("context: ", K.eval(context).shape)
+        
         # print("W   ", type(self.W))
         # # print("this W")
         # # print(type(self.W))
