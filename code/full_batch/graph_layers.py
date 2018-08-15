@@ -235,7 +235,7 @@ class GraphDense(Layer):
         Iadv = inputs[3]
         W_adv_mask = inputs[4]
         c_adv_mask = inputs[5]
-        prefEffect = inputs[6], ##MD+DEV+YANG
+        #prefEffect = inputs[6], ##MD+DEV+YANG
         mask_mul = rel_mask[:, 0]
         mask_div = rel_mask[:, 1]
 

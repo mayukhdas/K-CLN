@@ -280,18 +280,18 @@ def create_dense(n_layers, hidden_dim, input_dim, adv_dim, n_rel, n_neigh, n_cla
     for i in range(n_layers):
         #MD+DEV+YANG ---- Calc temp P(Y) here softmax(b+W.hidden_nodes)
         #modify GraphDense to add parameters to pass temp P(Y)
-        tempTop = Dense(output_dim=n_classes, input_dim=hidden_dim)(hidd_nodes) ##MD+DEV+YANG
-        tempTop = Activation(activation=top_act)(tempTop) ##MD+DEV+YANG
+        #tempTop = Dense(output_dim=n_classes, input_dim=hidden_dim)(hidd_nodes) ##MD+DEV+YANG
+        #tempTop = Activation(activation=top_act)(tempTop) ##MD+DEV+YANG
         #hidd_nodes = GraphDense(input_dim=hidden_dim, output_dim=hidden_dim, init=init,
                                 #n_rel=n_rel, mean=nmean, activation=act)([hidd_nodes, inp_rel, inp_rel_mask])
         hidd_nodes = GraphDense(input_dim=hidden_dim, output_dim=hidden_dim, init=init,
                                 n_rel=n_rel, mean=nmean, activation=act)([hidd_nodes, inp_rel, inp_rel_mask, 
-                                                                       inp_I_adv, inp_W_adv_mask, inp_c_adv_mask, tempTop]) # changes by MD & Yang
+                                                                       inp_I_adv, inp_W_adv_mask, inp_c_adv_mask]) # changes by MD & Yang
         if dropout: hidd_nodes = Dropout(0.5)(hidd_nodes)
 
     top_nodes = Dense(output_dim=n_classes, input_dim=hidden_dim)(hidd_nodes)
     top_nodes = Activation(activation=top_act)(top_nodes)
-    model = Model(input=[inp_nodes, inp_rel, inp_rel_mask, inp_I_adv, inp_W_adv_mask, inp_c_adv_mask, hidd_nodes], output=[top_nodes]) # changes by MD & Yang
+    model = Model(input=[inp_nodes, inp_rel, inp_rel_mask, inp_I_adv, inp_W_adv_mask, inp_c_adv_mask], output=[top_nodes]) # changes by MD & Yang
 
     return model
 
