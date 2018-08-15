@@ -291,7 +291,7 @@ def create_dense(n_layers, hidden_dim, input_dim, adv_dim, n_rel, n_neigh, n_cla
 
     top_nodes = Dense(output_dim=n_classes, input_dim=hidden_dim)(hidd_nodes)
     top_nodes = Activation(activation=top_act)(top_nodes)
-    model = Model(input=[inp_nodes, inp_rel, inp_rel_mask, inp_I_adv, inp_W_adv_mask, inp_c_adv_mask], output=[top_nodes]) # changes by MD & Yang
+    model = Model(input=[inp_nodes, inp_rel, inp_rel_mask, inp_I_adv, inp_W_adv_mask, inp_c_adv_mask, hidd_nodes], output=[top_nodes]) # changes by MD & Yang
 
     return model
 
