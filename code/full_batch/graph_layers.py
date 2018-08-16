@@ -2,6 +2,7 @@ from keras.layers import Layer, InputSpec, merge
 from keras import regularizers, initializations, activations, constraints
 from keras import backend as K
 import numpy as np
+import FinalLayerAccess as fla
 
 class GraphHighway(Layer):
     def __init__(self, init='glorot_uniform', transform_bias=-2,
@@ -172,15 +173,14 @@ class GraphDense(Layer):
         self.W_constraint = constraints.get(W_constraint)
         self.b_constraint = constraints.get(b_constraint)
         
-        self.W_class_temp = self.init((input_dim, class_dim),
-                                 name='{}_W_class_temp'.format(self.name))
-
+        
         self.bias = bias
         self.initial_weights = weights
         self.input_spec = [InputSpec(ndim=2)]
 
         self.input_dim = input_dim
         self.output_dim = output_dim
+        self.class_dim = class_dim #MD
         if self.input_dim:
             kwargs['input_shape'] = (self.input_dim,)
         super(GraphDense, self).__init__(**kwargs)
@@ -188,6 +188,7 @@ class GraphDense(Layer):
     def build(self, input_shape):
         input_dim = self.input_dim
         output_dim = self.output_dim
+        class_dim = self.class_dim #MD
         # print("inputdim:   ",input_dim)
         self.input_spec = [InputSpec(dtype=K.floatx(),
                                      shape=(None, input_dim))]
@@ -196,6 +197,9 @@ class GraphDense(Layer):
                            name='{}_W'.format(self.name))
         self.V = self.init((self.n_rel, input_dim, output_dim),
                            name='{}_V'.format(self.name))
+        
+        self.W_class_temp = self.init((input_dim, class_dim),
+                                 name='{}_W_class_temp'.format(self.name))
 
         if self.bias:
             self.b = K.zeros((output_dim,), name='{}_b'.format(self.name))
