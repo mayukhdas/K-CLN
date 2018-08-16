@@ -102,8 +102,8 @@ class SaveResult(Callback):
         v_auc, v_f1, v_pre, v_rec = self._compute_result(y_pred, self.y, self.valid_ids)
         
         #------------------- Change by MD ---------------
-        final_layer_weights = self.model.layers[len(self.model.layers)-1].get_weights()[0]
-        final_layer_bias = self.model.layers[len(self.model.layers)-1].get_weights()[1]
+        final_layer_weights = self.model.layers[0].get_weights()[0]
+        final_layer_bias = self.model.layers[0].get_weights()[1]
         fla.finalW = final_layer_weights
         fla.finalB = final_layer_bias
         #-------------------------------------------------
@@ -269,7 +269,7 @@ def create_dense(n_layers, hidden_dim, input_dim, adv_dim, n_rel, n_neigh, n_cla
     init = 'glorot_normal'
 
 
-    nc = numpy.zeros(n_classes).shape[-1]
+    #nc = numpy.zeros(n_classes).shape[-1]
     print "shape of nc:", nc
     inp_nodes = Input(shape=(input_dim,), dtype='float32', name='inp_nodes')
     inp_rel = Input(shape=(n_rel, n_neigh), dtype='int64', name='inp_rel')
