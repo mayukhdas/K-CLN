@@ -88,11 +88,13 @@ class SaveResult(Callback):
         f1 = call['f1'](y_true, y_pred, average=average)
         return auc, f1, pre, rec
 
-    def on_train_begin(self, epoch, logs={}): #Change by MD
-        final_layer_weights = self.model.layers[len(self.model.layers)-1].get_weights()[0]
-        final_layer_bias = self.model.layers[len(self.model.layers)-1].get_weights()[1]
-        fla.finalW = final_layer_weights
-        fla.finalB = final_layer_bias
+# =============================================================================
+#     def on_train_begin(self, epoch, logs={}): #Change by MD
+#         final_layer_weights = self.model.layers[0].get_weights()[0]
+#         final_layer_bias = self.model.layers[0].get_weights()[1]
+#         fla.finalW = final_layer_weights
+#         fla.finalB = final_layer_bias
+# =============================================================================
 
     def on_epoch_end(self, epoch, logs={}):
         y_pred = self.model.predict(self.x, batch_size=self.x[0].shape[0])
