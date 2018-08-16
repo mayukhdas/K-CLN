@@ -4,8 +4,6 @@ Created on Wed Aug 15 22:22:37 2018
 
 @author: mayuk
 """
-
-def Glob():
-    global fprobs
-    fprobs = []
+global fprobs
+fprobs = []
     
