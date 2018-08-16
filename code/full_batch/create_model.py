@@ -8,6 +8,7 @@ from sklearn import metrics
 from keras.constraints import *
 from keras.layers.advanced_activations import *
 from graph_layers import *
+import FinalLayerAccess as fla
 
 class SaveResult(Callback):
     '''
@@ -87,11 +88,23 @@ class SaveResult(Callback):
         f1 = call['f1'](y_true, y_pred, average=average)
         return auc, f1, pre, rec
 
+    def on_train_begin(self, epoch, logs={}): #Change by MD
+        final_layer_weights = self.model.layers[len(self.model.layers)-1].get_weights()[0]
+        final_layer_bias = self.model.layers[len(self.model.layers)-1].get_weights()[1]
+        fla.finalW = final_layer_weights
+        fla.finalB = final_layer_bias
 
     def on_epoch_end(self, epoch, logs={}):
         y_pred = self.model.predict(self.x, batch_size=self.x[0].shape[0])
         tr_auc, tr_f1, tr_pre, tr_rec = self._compute_result(y_pred, self.y, self.train_ids)
         v_auc, v_f1, v_pre, v_rec = self._compute_result(y_pred, self.y, self.valid_ids)
+        
+        #------------------- Change by MD ---------------
+        final_layer_weights = self.model.layers[len(self.model.layers)-1].get_weights()[0]
+        final_layer_bias = self.model.layers[len(self.model.layers)-1].get_weights()[1]
+        fla.finalW = final_layer_weights
+        fla.finalB = final_layer_bias
+        #-------------------------------------------------
 
         f = open(self.fileResult, 'a')
         f.write('%d\t%.4f\t%.4f\t|\t%.4f\t%.4f\t%.4f\t%.4f\t|' % (epoch, logs['loss'], logs['val_loss'], tr_auc, tr_f1, tr_pre, tr_rec))
@@ -284,7 +297,7 @@ def create_dense(n_layers, hidden_dim, input_dim, adv_dim, n_rel, n_neigh, n_cla
         #tempTop = Activation(activation=top_act)(tempTop) ##MD+DEV+YANG
         #hidd_nodes = GraphDense(input_dim=hidden_dim, output_dim=hidden_dim, init=init,
                                 #n_rel=n_rel, mean=nmean, activation=act)([hidd_nodes, inp_rel, inp_rel_mask])
-        hidd_nodes = GraphDense(input_dim=hidden_dim, output_dim=hidden_dim, init=init,
+        hidd_nodes = GraphDense(input_dim=hidden_dim, output_dim=hidden_dim, class_dim=n_classes, init=init,
                                 n_rel=n_rel, mean=nmean, activation=act)([hidd_nodes, inp_rel, inp_rel_mask, 
                                                                        inp_I_adv, inp_W_adv_mask, inp_c_adv_mask]) # changes by MD & Yang
         if dropout: hidd_nodes = Dropout(0.5)(hidd_nodes)

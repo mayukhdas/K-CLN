@@ -155,7 +155,7 @@ class GraphHighway(Layer):
 class GraphDense(Layer):
     def __init__(self, init='glorot_uniform',
                  n_rel=5, mean=1,
-                 input_dim=None, output_dim=None,
+                 input_dim=None, output_dim=None, class_dim=None,
                  activation='linear', weights=None,
                  W_regularizer=None, b_regularizer=None, activity_regularizer=None,
                  W_constraint=None, b_constraint=None,
@@ -171,6 +171,9 @@ class GraphDense(Layer):
 
         self.W_constraint = constraints.get(W_constraint)
         self.b_constraint = constraints.get(b_constraint)
+        
+        self.W_class_temp = self.init((input_dim, class_dim),
+                                 name='{}_W_class_temp'.format(self.name))
 
         self.bias = bias
         self.initial_weights = weights
