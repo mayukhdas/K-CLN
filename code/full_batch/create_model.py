@@ -98,15 +98,10 @@ class SaveResult(Callback):
 
     def on_epoch_end(self, epoch, logs={}):
         y_pred = self.model.predict(self.x, batch_size=self.x[0].shape[0])
+        fla.fprobs = y_pred
         tr_auc, tr_f1, tr_pre, tr_rec = self._compute_result(y_pred, self.y, self.train_ids)
         v_auc, v_f1, v_pre, v_rec = self._compute_result(y_pred, self.y, self.valid_ids)
         
-        #------------------- Change by MD ---------------
-        final_layer_weights = self.model.layers[0].get_weights()[0]
-        final_layer_bias = self.model.layers[0].get_weights()[1]
-        fla.finalW = final_layer_weights
-        fla.finalB = final_layer_bias
-        #-------------------------------------------------
 
         f = open(self.fileResult, 'a')
         f.write('%d\t%.4f\t%.4f\t|\t%.4f\t%.4f\t%.4f\t%.4f\t|' % (epoch, logs['loss'], logs['val_loss'], tr_auc, tr_f1, tr_pre, tr_rec))

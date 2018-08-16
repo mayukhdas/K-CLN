@@ -6,8 +6,6 @@ Created on Wed Aug 15 22:22:37 2018
 """
 
 def Glob():
-    global finalW
-    global finalB
-    finalW = []
-    finalB = []
+    global fprobs
+    fprobs = []
     

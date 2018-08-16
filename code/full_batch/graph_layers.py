@@ -258,7 +258,7 @@ class GraphDense(Layer):
         context = context * mask_mul[:, :, :, None]
         #context = context * c_adv_mask[:, :, :, None] # MD & Yang
         print("x   ", x.shape)
-        print("context: ", )
+        print("final Layer **** ", fla.fprobs)
         
         # Calculate indicator ---- MD
         #context = context * np.exp(np.dot(np.subtract(Iadv[:],self.prefEffect[:]),c_adv_mask[:, :, :, None]))##doing - MD+DEV+YANG
