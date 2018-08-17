@@ -118,7 +118,7 @@ def parseAdvice(ent,advice,feats,labels,rel_list,train):
             index = entity_list.index(targetEnt)
             #print labels[index], preflabel
             if str(labels[index]) == str(preflabel):
-                advice_entity_label[index] = 1
+                advice_entity_label[index] = int(preflabel)
             else:
                 advice_entity_label[index] = 0
             for p in body:
