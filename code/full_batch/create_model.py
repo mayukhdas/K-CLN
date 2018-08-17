@@ -98,7 +98,7 @@ class SaveResult(Callback):
 
     def on_epoch_end(self, epoch, logs={}):
         y_pred = self.model.predict(self.x, batch_size=self.x[0].shape[0])
-        fla.fprobs = y_pred
+        fla.fprobs = numpy.array(y_pred).reshape((len(y_pred),len(y_pred[0]))) ## MD
         
         print "IN epoch end%%%%%%%%%%%%%", fla.fprobs
         
