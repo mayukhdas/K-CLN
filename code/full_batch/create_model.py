@@ -276,6 +276,8 @@ def create_dense(n_layers, hidden_dim, input_dim, adv_dim, n_rel, n_neigh, n_cla
     inp_I_adv = Input(shape=(adv_dim,), dtype='float32', name='inp_I_adv')
     inp_W_adv_mask = Input(shape=(adv_dim,), dtype='float32', name='inp_W_adv_mask')
     inp_c_adv_mask = Input(shape=(n_rel, n_neigh), dtype='float32', name='inp_c_adv_mask')
+    inp_fprobs = Input(shape=(n_classes,), dtype='float32', name='inp_fprobs')
+    inp_I_mask = Input(shape=(n_classes,), dtype='float32', name='inp_fprobs')
     #tempTop = Input(shape=(nc,), dtype='float32', name='temptop')
     # print("Nodes ", inp_nodes.shape)
     # print("Inp_rel: ",inp_rel.eval())
@@ -299,12 +301,12 @@ def create_dense(n_layers, hidden_dim, input_dim, adv_dim, n_rel, n_neigh, n_cla
                                 #n_rel=n_rel, mean=nmean, activation=act)([hidd_nodes, inp_rel, inp_rel_mask])
         hidd_nodes = GraphDense(input_dim=hidden_dim, output_dim=hidden_dim, class_dim=n_classes, init=init,
                                 n_rel=n_rel, mean=nmean, activation=act)([hidd_nodes, inp_rel, inp_rel_mask, 
-                                                                       inp_I_adv, inp_W_adv_mask, inp_c_adv_mask]) # changes by MD & Yang
+                                                                       inp_I_adv, inp_W_adv_mask, inp_c_adv_mask, inp_fprobs, inp_I_mask]) # changes by MD & Yang
         if dropout: hidd_nodes = Dropout(0.5)(hidd_nodes)
 
     top_nodes = Dense(output_dim=n_classes, input_dim=hidden_dim)(hidd_nodes)
     top_nodes = Activation(activation=top_act)(top_nodes)
-    model = Model(input=[inp_nodes, inp_rel, inp_rel_mask, inp_I_adv, inp_W_adv_mask, inp_c_adv_mask], output=[top_nodes]) # changes by MD & Yang
+    model = Model(input=[inp_nodes, inp_rel, inp_rel_mask, inp_I_adv, inp_W_adv_mask, inp_c_adv_mask, inp_fprobs, inp_I_mask], output=[top_nodes]) # changes by MD & Yang
 
     return model
 

@@ -8,6 +8,7 @@ numpy.random.seed(seed)
 
 from keras.optimizers import *
 from create_model import *
+import FinalLayerAccess as fla
 
 dataset = args['-data']
 task = 'software'
@@ -30,7 +31,7 @@ if 'dr' in args['-reg']: dropout = True
 else: dropout = False
 #feats, labels, rel_list, rel_mask, train_ids, valid_ids, test_ids = prepare_data.load_data(dataset)
 feats, labels, rel_list, rel_mask, train_ids, valid_ids, test_ids, I_adv, W_adv_mask, c_adv_mask = sd.sample_data(dataset,nodeFile,relFile,0.4)
-I_adv = numpy.array(I_adv).reshape((len(I_adv),1))
+#I_adv = numpy.array(I_adv).reshape((len(I_adv),1))
 W_adv_mask = numpy.array(W_adv_mask).reshape((len(W_adv_mask),1))
 #W_adv_mask = numpy.repeat(W_adv_mask,feats.shape[-1],axis=1)
 c_adv_mask = numpy.array(c_adv_mask)
@@ -62,6 +63,11 @@ else:
 if 'movie' in task:
     n_classes = -labels.shape[-1]
 
+
+I_mask = np.zeros(len(I_adv),n_classes)
+I_temp = [i*3+I_adv[i] for i in range(len(I_adv))]
+np.put(I_mask,I_temp,1.0)
+I_adv = numpy.array(I_adv).reshape((len(I_adv),1))
 ########################## BUILD MODEL ###############################################
 print('Building model ...')
 
@@ -105,12 +111,12 @@ f.write('Training log:\n')
 f.close()
 print("after log")
 
-saveResult = SaveResult([[feats, rel_list, rel_mask, I_adv, W_adv_mask, c_adv_mask], labels, train_ids, valid_ids, test_ids],
+saveResult = SaveResult([[feats, rel_list, rel_mask, I_adv, W_adv_mask, c_adv_mask, fla.fprobs, I_mask], labels, train_ids, valid_ids, test_ids],
                         task=task, fileResult=fResult, fileParams=fParams)
 
 callbacks=[saveResult, NanStopping()]
 
-his = model.fit([feats, rel_list, rel_mask, I_adv, W_adv_mask, c_adv_mask], train_y,
-                validation_data=([feats, rel_list, rel_mask, I_adv, W_adv_mask, c_adv_mask], valid_y),
+his = model.fit([feats, rel_list, rel_mask, I_adv, W_adv_mask, c_adv_mask, fla.fprobs, I_mask], train_y,
+                validation_data=([feats, rel_list, rel_mask, I_adv, W_adv_mask, c_adv_mask, fla.fprobs, I_mask], valid_y),
                 nb_epoch=1000, batch_size=feats.shape[0], shuffle=False,
                 callbacks=callbacks)
