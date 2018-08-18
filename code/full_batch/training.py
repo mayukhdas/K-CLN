@@ -65,13 +65,12 @@ if 'movie' in task:
 
 print "I advice :::::::::::::: ",I_adv, len(I_adv),n_classes
 
-I_mask = numpy.zeros(len(I_adv),n_classes)
 I_temp = [i*n_classes+I_adv[i] for i in range(0, len(I_adv))]
 
 print "I_temp :::", I_temp[19716], len(I_temp)
-
+I_mask = numpy.zeros(len(I_temp),n_classes)
 numpy.put(I_mask,I_temp,1.0)
-I_adv = numpy.array(I_adv).reshape((len(I_adv),1))
+I_ad = numpy.array(I_adv).reshape((len(I_adv),1))
 ########################## BUILD MODEL ###############################################
 print('Building model ...')
 
@@ -115,12 +114,12 @@ f.write('Training log:\n')
 f.close()
 print("after log")
 
-saveResult = SaveResult([[feats, rel_list, rel_mask, I_adv, W_adv_mask, c_adv_mask, fla.fprobs, I_mask], labels, train_ids, valid_ids, test_ids],
+saveResult = SaveResult([[feats, rel_list, rel_mask, I_ad, W_adv_mask, c_adv_mask, fla.fprobs, I_mask], labels, train_ids, valid_ids, test_ids],
                         task=task, fileResult=fResult, fileParams=fParams)
 
 callbacks=[saveResult, NanStopping()]
 
-his = model.fit([feats, rel_list, rel_mask, I_adv, W_adv_mask, c_adv_mask, fla.fprobs, I_mask], train_y,
-                validation_data=([feats, rel_list, rel_mask, I_adv, W_adv_mask, c_adv_mask, fla.fprobs, I_mask], valid_y),
+his = model.fit([feats, rel_list, rel_mask, I_ad, W_adv_mask, c_adv_mask, fla.fprobs, I_mask], train_y,
+                validation_data=([feats, rel_list, rel_mask, I_ad, W_adv_mask, c_adv_mask, fla.fprobs, I_mask], valid_y),
                 nb_epoch=1000, batch_size=feats.shape[0], shuffle=False,
                 callbacks=callbacks)
