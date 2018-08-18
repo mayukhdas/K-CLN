@@ -81,7 +81,7 @@ if modelType == 'Highway':
                            n_rel=rel_list.shape[-2], n_neigh=rel_list.shape[-1],
                            n_classes=n_classes, shared=shared, nmean=nmean, dropout=dropout)
 elif modelType == 'Dense':
-    model = create_dense(n_layers=n_layers, hidden_dim=dim, input_dim=feats.shape[-1], adv_dim = I_adv.shape[-1],
+    model = create_dense(n_layers=n_layers, hidden_dim=dim, input_dim=feats.shape[-1], adv_dim = I_ad.shape[-1],
                            n_rel=rel_list.shape[-2], n_neigh=rel_list.shape[-1],
                            n_classes=n_classes, shared=shared, nmean=nmean, dropout=dropout)
 else:
