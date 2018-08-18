@@ -67,6 +67,9 @@ print "I advice :::::::::::::: ",I_adv, len(I_adv),n_classes
 
 I_mask = numpy.zeros(len(I_adv),n_classes)
 I_temp = [i*n_classes+I_adv[i] for i in range(0, len(I_adv))]
+
+print "I_temp :::", I_temp[19716]
+
 numpy.put(I_mask,I_temp,1.0)
 I_adv = numpy.array(I_adv).reshape((len(I_adv),1))
 ########################## BUILD MODEL ###############################################
