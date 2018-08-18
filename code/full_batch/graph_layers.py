@@ -264,6 +264,9 @@ class GraphDense(Layer):
         
         # Calculate indicator ---- MD
         advice_gate = K.sum((y_adv_mask - yprobs)*y_adv_mask)
+        
+        
+        print "advice gate", advice_gate
         #context = context * np.exp(np.dot(np.subtract(Iadv[:],self.prefEffect[:]),c_adv_mask[:, :, :, None]))##doing - MD+DEV+YANG
         context = context * K.exp(advice_gate*c_adv_mask[:, :, :, None])
         
