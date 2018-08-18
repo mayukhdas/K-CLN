@@ -6,13 +6,14 @@ This is a temporary script file.
 """
 
 import numpy as np
+import math as m
 y = [3,4,81,0,9,32,6,0,0,0,1]
 x = np.asarray(y)
 #print("Original array: ")
 #print(x)
 #print("Their indices are ", [y[i] for i in np.nonzero(x)])
 #print "Their indices are ", [y[i] for i in np.nonzero(x)[0]]
-
+nan = float('nan')
 s = [[0.2,0.2,0.3],
      [0.1,0.3,0.4],
      [0.1,0.4,0.6],
@@ -32,13 +33,10 @@ l.extend([0]*(19717-len(l)))
 #l = np.array(l)
 l = [i*3+l[i] for i in range(0, len(l))]
 
-k = np.zeros((len(l),3))
-
-np.put(k,l,1.0)
-
-
-print k
+k = np.ones((len(l),3))
+#k = np.multiply(k,nan)
+#np.put(k,l,1.0)
 
 
-with open("test.txt", "a") as myfile:
-    myfile.write("epoch: "+str(k)+"\n")
+
+print (True in np.isnan(k))
