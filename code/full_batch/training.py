@@ -63,7 +63,7 @@ else:
 if 'movie' in task:
     n_classes = -labels.shape[-1]
 
-print "I advice :::::::::::::: ",I_adv, len(I_adv)
+print "I advice :::::::::::::: ",I_adv, len(I_adv),n_classes
 
 I_mask = numpy.zeros(len(I_adv),n_classes)
 I_temp = [i*n_classes+I_adv[i] for i in range(0, len(I_adv))]
