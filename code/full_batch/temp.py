@@ -38,3 +38,7 @@ np.put(k,l,1.0)
 
 
 print k
+
+
+with open("test.txt", "a") as myfile:
+    myfile.write("epoch: "+str(k)+"\n")

@@ -99,8 +99,10 @@ class SaveResult(Callback):
     def on_epoch_end(self, epoch, logs={}):
         y_pred = self.model.predict(self.x, batch_size=self.x[0].shape[0])
         fla.fprobs = numpy.array(y_pred).reshape((len(y_pred),len(y_pred[0]))) ## MD
-        
+        with open("probs.txt", "a") as myfile:
+            myfile.write("epochend: "+str(y_pred)+"\n")
         print "IN epoch end%%%%%%%%%%%%%", fla.fprobs
+        
         
         tr_auc, tr_f1, tr_pre, tr_rec = self._compute_result(y_pred, self.y, self.train_ids)
         v_auc, v_f1, v_pre, v_rec = self._compute_result(y_pred, self.y, self.valid_ids)
