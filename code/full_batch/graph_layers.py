@@ -267,7 +267,8 @@ class GraphDense(Layer):
         #if not (True in th.tensor.isnan(yprobs)):
         advice_gate = K.sum((y_adv_mask - yprobs)*y_adv_mask, axis=1)
         #context = context * np.exp(np.dot(np.subtract(Iadv[:],self.prefEffect[:]),c_adv_mask[:, :, :, None]))##doing - MD+DEV+YANG
-        context = context * K.exp(advice_gate[:, None, None]*c_adv_mask[:, :, :])
+        #context = context * K.exp(advice_gate[:, None, None] * c_adv_mask[:, :, :])
+        context = context * K.exp(c_adv_mask[:, :, :])
         
         
         # -> now, context: n_nodes, n_rel, dim
