@@ -258,17 +258,20 @@ class GraphDense(Layer):
         # print("rel   ",type(rel))
         # print("n_rel",type(n_rel))
         context = x[rel.flatten()].reshape([n_nodes, n_rel, n_neigh, dim])
+        context = context * K.exp(c_adv_mask[:, :, :, None]) #MD
         context = context * mask_mul[:, :, :, None]
         #context = context * c_adv_mask[:, :, :, None] # MD & Yang
-        print("x   ", x.shape)
+        print("context shape   ", x.shape)
         #print("final Layer **** ", fla.fprobs)
         context = K.sum(context, axis=-2) / K.sum(mask_div, axis=-1)[:, :, None]
         # Calculate indicator ---- MD
         #if not (True in th.tensor.isnan(yprobs)):
-        advice_gate = K.sum((y_adv_mask - yprobs)*y_adv_mask, axis=1)
+        advice_gate = K.sum((y_adv_mask - yprobs)*y_adv_mask, axis=1) #MD
         #context = context * np.exp(np.dot(np.subtract(Iadv[:],self.prefEffect[:]),c_adv_mask[:, :, :, None]))##doing - MD+DEV+YANG
         #context = context * K.exp(advice_gate[:, None, None] * c_adv_mask[:, :, :])
-        context = context * K.exp(c_adv_mask[:, :, :])
+        #print("context shape   ", context.shape)
+        
+        
         
         
         # -> now, context: n_nodes, n_rel, dim
