@@ -264,10 +264,10 @@ class GraphDense(Layer):
         #print("final Layer **** ", fla.fprobs)
         context = K.sum(context, axis=-2) / K.sum(mask_div, axis=-1)[:, :, None]
         # Calculate indicator ---- MD
-        if not (True in th.tensor.isnan(yprobs)):
-            advice_gate = K.sum((y_adv_mask - yprobs)*y_adv_mask)
-            #context = context * np.exp(np.dot(np.subtract(Iadv[:],self.prefEffect[:]),c_adv_mask[:, :, :, None]))##doing - MD+DEV+YANG
-            context = context * K.exp(advice_gate*c_adv_mask[:, :, :, None])
+        #if not (True in th.tensor.isnan(yprobs)):
+        advice_gate = K.sum((y_adv_mask - yprobs)*y_adv_mask)
+        #context = context * np.exp(np.dot(np.subtract(Iadv[:],self.prefEffect[:]),c_adv_mask[:, :, :, None]))##doing - MD+DEV+YANG
+        context = context * K.exp(advice_gate*c_adv_mask[:, :, :, None])
         
         
         # -> now, context: n_nodes, n_rel, dim
