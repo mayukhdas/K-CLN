@@ -298,6 +298,7 @@ class GraphDense(Layer):
         # print("this V")
         # print(type(self.V))
         print("dimension of V:  ", K.eval(self.V).shape)
+        x = x*advice_gate[:,None]
         
         h = K.dot(x, self.W) + context
         if self.bias:
