@@ -265,7 +265,7 @@ class GraphDense(Layer):
         
         context = context * mask_mul[:, :, :, None]
         #context = context * c_adv_mask[:, :, :, None] # MD & Yang
-        print("context shape   ", x.shape)
+        #print("context shape   ", x.shape)
         #print("final Layer **** ", fla.fprobs)
         context = K.sum(context, axis=-2) / K.sum(mask_div, axis=-1)[:, :, None]
         # Calculate indicator ---- MD
@@ -293,11 +293,11 @@ class GraphDense(Layer):
         # # print("this W")
         # # print(type(self.W))
         # # print(K.eval(self.W))
-        print("dimension of W:  ", K.eval(self.W).shape)
+        #print("dimension of W:  ", K.eval(self.W).shape)
         # print("content of W:  ", K.eval(self.W))
         # print("this V")
         # print(type(self.V))
-        print("dimension of V:  ", K.eval(self.V).shape)
+        #print("dimension of V:  ", K.eval(self.V).shape)
         #x = x*advice_gate[:,None]
         
         h = K.dot(x, self.W) + context
