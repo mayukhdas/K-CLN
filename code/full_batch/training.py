@@ -63,14 +63,15 @@ else:
 if 'movie' in task:
     n_classes = -labels.shape[-1]
 
-print "I advice :::::::::::::: ",I_adv, len(I_adv),n_classes
+#print "I advice :::::::::::::: ",I_adv, len(I_adv),n_classes
 
 I_temp = [i*n_classes+I_adv[i] for i in range(0, len(I_adv))]
 
-print "I_temp :::", I_temp[19716], len(I_temp)
+#print "I_temp :::", I_temp[19716], len(I_temp)
 I_mask = numpy.zeros((len(I_temp),n_classes))
 numpy.put(I_mask,I_temp,1.0)
 I_ad = numpy.array(I_adv).reshape((len(I_adv),1))
+fla.init(len(labels),n_classes) # MD initialize fla
 ########################## BUILD MODEL ###############################################
 print('Building model ...')
 
