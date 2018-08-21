@@ -108,7 +108,8 @@ def parseAdvice(ent,advice,feats,labels,rel_list,train):
             Target_entities.append(targetEntGiven)
         else:
             #print entity_list[train[0]]
-            Target_entities.extend([entity_list[i] for i in train])
+            #Target_entities.extend([entity_list[i] for i in train])
+            Target_entities.extend([entity_list[i] for i in range(len(labels))])
         #print "list of targets", entity_list[train[10]], Target_entities
             
         for index, targetEnt in enumerate(Target_entities):
