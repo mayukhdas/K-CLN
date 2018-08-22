@@ -20,7 +20,7 @@ def sample_data(path, pathNode, pathRel, portion, sampleFile):
         test_ids_sample = random.sample(test_ids, int(len(test_ids)*portion))
     else:
         print "Previously sampled data used"
-        train_ids_sample, valid_ids_sample, test_ids_sample, fileLoc = sls.load_sample(sampleFile)
+        train_ids_sample, valid_ids_sample, test_ids_sample = sls.load_sample(sampleFile)
     # index = list()
     # index.extend(train_ids_sample)
     # index.extend(valid_ids_sample)
