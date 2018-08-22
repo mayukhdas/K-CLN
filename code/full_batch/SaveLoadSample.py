@@ -41,7 +41,7 @@ def load_sample(filepath):
 
 f = gzip.open('../data/' + 'pubmed' + '.pkl.gz', 'rb')
 feats, labels, rel_list, train_ids, valid_ids, test_ids = cPickle.load(f)
-save_sample(train_ids, valid_ids, test_ids, 'pubmedSample1', '../data/')
+save_sample(train_ids, valid_ids, test_ids, 'pubmedSample2', '../data/')
 
 
     
