@@ -26,7 +26,7 @@ def save_sample(train_ids,valid_ids,test_ids, name, loc):
     data['valid'] = valid_ids_sample
     data['test'] = test_ids_sample
     with open(finalloc, 'w') as outfile:
-        json.dump(data, outfile)
+        json.dump(dict(data), outfile)
     
     return train_ids_sample,valid_ids_sample,test_ids_sample,finalloc
 
