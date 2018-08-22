@@ -20,7 +20,7 @@ def save_sample(train_ids,valid_ids,test_ids, name, loc):
     
     train_ids_sample = random.sample(train_ids, int(len(train_ids)*0.4))
     valid_ids_sample = random.sample(valid_ids, int(len(valid_ids)*0.4))
-    test_ids_sample = random.sample(test_ids, int(len(test_ids)*0,4))
+    test_ids_sample = random.sample(test_ids, int(len(test_ids)*0.4))
     
     data['train'] = train_ids_sample
     data['valid'] = valid_ids_sample

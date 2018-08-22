@@ -10,6 +10,10 @@ from keras.optimizers import *
 from create_model import *
 import FinalLayerAccess as fla
 
+#MD + Yang + Dev
+sampleFname = None
+sampleFname = args['-sample']
+
 dataset = args['-data']
 task = 'software'
 if 'pubmed' in dataset:

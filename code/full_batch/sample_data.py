@@ -5,19 +5,22 @@ import numpy
 import read_pkl as rp
 import random
 import adviceParser as ap
+import SaveLoadSample as sls
 
 
 
-
-def sample_data(path, pathNode, pathRel, portion):
+def sample_data(path, pathNode, pathRel, portion, sampleFile):
     f = gzip.open(path, 'rb')
     feats, labels, rel_list, train_ids, valid_ids, test_ids = cPickle.load(f)
     #feats, labels = prepare_data.modData(feats, labels)
     
-
-    train_ids_sample = random.sample(train_ids, int(len(train_ids)*portion))
-    valid_ids_sample = random.sample(valid_ids, int(len(valid_ids)*portion))
-    test_ids_sample = random.sample(test_ids, int(len(test_ids)*portion))
+    if sampleFile is None:
+        train_ids_sample = random.sample(train_ids, int(len(train_ids)*portion))
+        valid_ids_sample = random.sample(valid_ids, int(len(valid_ids)*portion))
+        test_ids_sample = random.sample(test_ids, int(len(test_ids)*portion))
+    else:
+        print "Previously sampled data used"
+        train_ids_sample, valid_ids_sample, test_ids_sample, fileLoc = sls.load_sample(sampleFile)
     # index = list()
     # index.extend(train_ids_sample)
     # index.extend(valid_ids_sample)
