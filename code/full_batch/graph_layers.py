@@ -271,9 +271,9 @@ class GraphDense(Layer):
         # Calculate indicator ---- MD
         #if not (True in th.tensor.isnan(yprobs)):
         
-        context = context * np.exp(np.dot(np.subtract(Iadv[:],self.prefEffect[:]),c_adv_mask[:, :, :, None]))##doing - MD+DEV+YANG
-        context = context * K.exp(advice_gate[:, None, None] * c_adv_mask[:, :, :])
-        print("context shape   ", context.shape)
+        #context = context * np.exp(np.dot(np.subtract(Iadv[:],self.prefEffect[:]),c_adv_mask[:, :, :, None]))##doing - MD+DEV+YANG
+        #context = context * K.exp(advice_gate[:, None, None] * c_adv_mask[:, :, :])
+        #print("context shape   ", context.shape)
         
         
         
