@@ -271,9 +271,9 @@ class GraphDense(Layer):
         # Calculate indicator ---- MD
         #if not (True in th.tensor.isnan(yprobs)):
         
-        #context = context * np.exp(np.dot(np.subtract(Iadv[:],self.prefEffect[:]),c_adv_mask[:, :, :, None]))##doing - MD+DEV+YANG
-        #context = context * K.exp(advice_gate[:, None, None] * c_adv_mask[:, :, :])
-        #print("context shape   ", context.shape)
+        context = context * np.exp(np.dot(np.subtract(Iadv[:],self.prefEffect[:]),c_adv_mask[:, :, :, None]))##doing - MD+DEV+YANG
+        context = context * K.exp(advice_gate[:, None, None] * c_adv_mask[:, :, :])
+        print("context shape   ", context.shape)
         
         
         
@@ -298,7 +298,7 @@ class GraphDense(Layer):
         # print("this V")
         # print(type(self.V))
         #print("dimension of V:  ", K.eval(self.V).shape)
-        #x = x*advice_gate[:,None]
+        x = x*advice_gate[:,None]
         
         h = K.dot(x, self.W) + context
         if self.bias:
