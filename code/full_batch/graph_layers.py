@@ -261,7 +261,7 @@ class GraphDense(Layer):
         
         advice_gate = K.sum((y_adv_mask - yprobs)*y_adv_mask, axis=1) #MD
         c_adv_mask = K.exp(c_adv_mask[:, :, :] * advice_gate[:, None, None])#MD
-        print "ADICE MASK", c_adv_mask.shape
+        print "ADVICE MASK", K.eval(c_adv_mask).shape
         context = context * c_adv_mask[:, :, :, None] #MD
         
         context = context * mask_mul[:, :, :, None]
