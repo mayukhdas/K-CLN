@@ -205,9 +205,9 @@ class GraphDense(Layer):
         if self.bias:
             self.b = K.zeros((output_dim,), name='{}_b'.format(self.name))
             # initialize with a vector of values `transform_bias`
-            self.trainable_weights = [self.W, self.V, self.advice_rate, self.b]
+            self.trainable_weights = [self.W, self.V, self.b]
         else:
-            self.trainable_weights = [self.W, self.V, self.advice_rate]
+            self.trainable_weights = [self.W, self.V]
 
         self.regularizers = []
         if self.W_regularizer:
@@ -261,7 +261,6 @@ class GraphDense(Layer):
         
         advice_gate = K.sum((y_adv_mask - yprobs)*y_adv_mask, axis=1) #MD
         c_adv_mask = K.exp(c_adv_mask[:, :, :] * advice_gate[:, None, None])#MD
-        print "ADVICE MASK", K.eval(c_adv_mask).shape
         context = context * c_adv_mask[:, :, :, None] #MD
         
         context = context * mask_mul[:, :, :, None]
