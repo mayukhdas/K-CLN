@@ -102,10 +102,10 @@ class SaveResult(Callback):
         #with open("probs.txt", "w") as myfile:
             #myfile.write("epochend: "+str(y_pred)+"\n")
         #print "IN epoch end%%%%%%%%%%%%%", fla.fprobs
-        layerx = self.model.get_layer("graphdense_1").get_weights()
-        with open("layer1output.txt", "w") as myfl:
-            myfl.write(str(layerx))
-            print "written\n"+str(layerx[0].shape)+str(layerx[1].shape)+str(layerx[2].shape)
+#        layerx = self.model.get_layer("graphdense_1").get_weights()
+#        with open("layer1output.txt", "w") as myfl:
+#            myfl.write(str(layerx))
+#            print "written\n"+str(layerx[0].shape)+str(layerx[1].shape)+str(layerx[2].shape)
         
         
         tr_auc, tr_f1, tr_pre, tr_rec = self._compute_result(y_pred, self.y, self.train_ids)
