@@ -7,6 +7,7 @@ This is a temporary script file.
 
 import numpy as np
 import math as m
+import cPickle as pkl
 y = [3,4,81,0,9,32,6,0,0,0,1]
 x = np.asarray(y)
 #print("Original array: ")
@@ -27,16 +28,26 @@ s = [[0.2,0.2,0.3],
 s = np.array(s).reshape((8,3))
 
 l = [2,0,1,2,0,2,1,1]
-l.extend([0]*(19717-len(l)))
 #print l
 
 #l = np.array(l)
 l = [i*3+l[i] for i in range(0, len(l))]
 
-k = np.ones((len(l),3))
+#k = np.ones((len(l),3))
 #k = np.multiply(k,nan)
 #np.put(k,l,1.0)
+#print l,s
+
+pkl.dump((l,s), open("testPickle.pkl","wb"))
+
+v1 = []
+v2 = []
+
+print v1, v2
+with open("testPickle.pkl", "rb") as f:
+    v1,v2 = pkl.load(f)
+
+print v1 , v2
 
 
-
-print (True in np.isnan(k))
+#print (True in np.isnan(k))

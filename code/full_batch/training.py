@@ -20,6 +20,8 @@ if 'pubmed' in dataset:
     task = 'pubmed'
 elif 'movie' in dataset:
     task = 'movie'
+elif 'debate' in dataset:
+    task = 'debate'
 
 dataset = '../data/' + dataset + '.pkl.gz'
 nodeFile =  '../data/' + 'pubmed-Diabetes.NODE.paper.tab' #MD & Yang
