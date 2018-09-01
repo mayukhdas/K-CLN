@@ -39,7 +39,7 @@ def processLiteral(lit):
 def parseEntities(f):
     entityl = []
     ewl = []
-    with open('test.json') as fl:
+    with open('../data/test.json') as fl:
         data = json.loads(fl.read().decode("utf-8",'ignore'))
     l = []
     for i in range(len(data['rows'])):
