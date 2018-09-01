@@ -6,6 +6,7 @@ Created on Fri Aug 31 14:07:16 2018
 """
 
 import cPickle as pkl
+import numpy as np
 
 with open('featuresDebate.pkl','rb') as f:
     feats = pkl.load(f)
@@ -26,6 +27,8 @@ print len(finalfeats[100])
 
 with open('relsAndLabelsAndSample.pkl', 'rb') as f2:
     r,labels,train,valid,test = pkl.load(f2)
-    
+
+finalfeats = np.array(finalfeats).reshape((len(finalfeats),len(finalfeats[0])))
+labels = np.array(labels).reshape((len(labels),1))
 with open('debate.pkl', 'wb') as f3:
     pkl.dump((finalfeats,labels,r,train,valid,test),f3)
