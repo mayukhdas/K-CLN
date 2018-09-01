@@ -23,7 +23,7 @@ print len(l)
 
 #from pprint import pprint
 
-with open('title.json') as fl:
+with open('test.json') as fl:
     data = json.loads(fl.read().decode("utf-8",'ignore'))
 
 #print data['rows']
@@ -47,7 +47,7 @@ print len(l)
 
 all_documents = l
 
-sklearn_tfidf = TfidfVectorizer(stop_words='english',norm='l2',min_df=0, use_idf=True, smooth_idf=False,  sublinear_tf=True, tokenizer=tokenize)#max_features=500,
+sklearn_tfidf = TfidfVectorizer(stop_words='english',norm='l2',min_df=0, use_idf=True, smooth_idf=False, max_features=300, sublinear_tf=True, tokenizer=tokenize)#max_features=500,
 sklearn_representation = sklearn_tfidf.fit_transform(all_documents)
 #l = tfidf(all_documents)
 feature_names = sklearn_tfidf.get_feature_names()
@@ -69,5 +69,5 @@ for i in range(len(l)):
     feats.append(f)
 print feats[100]
 
-with open('discTitlesDebate.pkl', 'wb') as f:
+with open('featuresDebate.pkl', 'wb') as f:
     pkl.dump(feats, f)
