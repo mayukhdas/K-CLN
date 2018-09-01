@@ -148,24 +148,24 @@ def parseAdvice(ent,advice,feats,labels,rel_list,train):
                     if not str.startswith(k,"?"):
                         if (hasWordinEntity(ent, entitiesInQuestion[k], k) is True) and (entitiesInQuestionCon[k] is not None) and ((k in rel_list[targetEnt]) or (targetEnt in rel_list[k])):
                             rel = targetEnt
-                            if entitiesInQuestionCon[k] is 'sameDisc':
+                            if entitiesInQuestionCon[k] is 'sameauth':
                                 idx = rel_list[rel,0].tolist().index(k)
                                 advice_relation_mask[rel,0,idx] = 1
-                            else:
-                                idx = rel_list[rel,1].tolist().index(k)
-                                advice_relation_mask[rel,1,idx] = 1
+                            #else:
+                                #idx = rel_list[rel,1].tolist().index(k)
+                                #advice_relation_mask[rel,1,idx] = 1
                     else:
                         nbrsId = getNeighborList(targetEnt,rel_list,entitiesInQuestionCon[k])
                         nbrs= nbrsId#[entity_list[i] for i in nbrsId]
                         for n in nbrs:
                             if hasWordinEntity(ent,entitiesInQuestion[k],n):
                                 rel = targetEnt
-                                if entitiesInQuestionCon[k] is 'sameDisc':
+                                if entitiesInQuestionCon[k] is 'sameauth':
                                     idx = rel_list[rel,0].tolist().index(n)
                                     advice_relation_mask[rel,0,idx] = 1
-                                else:
-                                    idx = rel_list[rel,1].tolist().index(n)
-                                    advice_relation_mask[rel,1,idx] = 1
+                                #else:
+                                    #idx = rel_list[rel,1].tolist().index(n)
+                                    #advice_relation_mask[rel,1,idx] = 1
                 
                                 
 def getNeighborList(entity, rel_list, relname):
@@ -176,10 +176,10 @@ def getNeighborList(entity, rel_list, relname):
     elif entity > len(rel_list):
         raise Exception("entity not in raw_rel")
     else:
-        if relname is 'samedisc':
-            newL = rel_list[entity][0]
+        #if relname is 'samedisc':
+            #newL = rel_list[entity][0]
         if relname is 'sameauth':
-            newL = rel_list[entity][1]
+            newL = rel_list[entity][0]
         ret = np.asarray(newL)
         #print ret
     return [newL[i] for i in np.nonzero(ret)[0]]

@@ -46,7 +46,7 @@ for i, row in enumerate(twocols):
             sameDisc.append(j)
         if i != j and thisAuth == currAuth:
             sameAuth.append(j)
-    rels.append([sameDisc,sameAuth])
+    rels.append([sameAuth])
 
 #print rels[1000]
     

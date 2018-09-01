@@ -19,7 +19,7 @@ print len(titles[0])
 finalfeats = []
 for i, row in enumerate(feats):
     x = feats[i]
-    x.extend(titles[i])
+    #x.extend(titles[i])
     finalfeats.append(x)
 
 print len(finalfeats[100])
