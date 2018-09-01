@@ -133,7 +133,7 @@ def parseAdvice(ent,advice,feats,labels,rel_list,train):
                             advice_entity_mask[index] = 1
                     else:
                         entitiesInQuestion[p[1]] = p[2]
-                        if p[1] not in entitiesInQuestionCon.keys:
+                        if p[1] not in entitiesInQuestionCon:
                             entitiesInQuestionCon[p[1]] = None
                 else:
                     if targetEnt in p:
