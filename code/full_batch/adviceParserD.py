@@ -189,12 +189,12 @@ def hasWordinEntity(nodefile,word,entity):
     #print len(entity_whole_list)
     #with open(nodefile) as tsv:
     #for line in csv.reader(tsv, dialect="excel-tab"):
-    for line in entity_whole_list:
+    #for line in entity_whole_list:
         #print line[0],entity
         #if line[0]==entity:
-        if word in line[entity]:
+    if word in entity_whole_list[entity]:
             #print "found"
-            ret = True
+        ret = True
     return ret
 
 
