@@ -52,7 +52,7 @@ for i, row in enumerate(twocols):
     
 
 
-r = np.asarray(rels)
+r = rels
 
 
 #for i, row in enumerate(feats):
