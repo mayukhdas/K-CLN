@@ -29,6 +29,7 @@ with open('relsAndLabelsAndSample.pkl', 'rb') as f2:
     r,labels,train,valid,test = pkl.load(f2)
 
 finalfeats = np.array(finalfeats).reshape((len(finalfeats),len(finalfeats[0])))
-labels = np.array(labels).reshape((len(labels),1))
+labels = np.array(labels)
+print labels.shape
 with open('debate.pkl', 'wb') as f3:
     pkl.dump((finalfeats,labels,r,train,valid,test),f3)
