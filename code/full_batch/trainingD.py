@@ -43,7 +43,7 @@ yidx = args['-y']
 if 'dr' in args['-reg']: dropout = True
 else: dropout = False
 #feats, labels, rel_list, rel_mask, train_ids, valid_ids, test_ids = prepare_data.load_data(dataset)
-feats, labels, rel_list, rel_mask, train_ids, valid_ids, test_ids, I_adv, W_adv_mask, c_adv_mask = sd.sample_data(dataset,nodeFile,relFile,0.4, sampleFname)
+feats, labels, rel_list, rel_mask, train_ids, valid_ids, test_ids, I_adv, W_adv_mask, c_adv_mask = sd.sample_dataD(dataset,nodeFile,relFile,0.4, sampleFname)
 #I_adv = numpy.array(I_adv).reshape((len(I_adv),1))
 W_adv_mask = numpy.array(W_adv_mask).reshape((len(W_adv_mask),1))
 #W_adv_mask = numpy.repeat(W_adv_mask,feats.shape[-1],axis=1)
