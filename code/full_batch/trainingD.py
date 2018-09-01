@@ -8,7 +8,7 @@ Created on Fri Aug 31 14:39:28 2018
 import numpy
 import sys
 import prepare_data
-import sample_data as sd
+import sample_dataD as sd
 args = prepare_data.arg_passing(sys.argv)
 seed = args['-seed']
 numpy.random.seed(seed)
@@ -43,7 +43,7 @@ yidx = args['-y']
 if 'dr' in args['-reg']: dropout = True
 else: dropout = False
 #feats, labels, rel_list, rel_mask, train_ids, valid_ids, test_ids = prepare_data.load_data(dataset)
-feats, labels, rel_list, rel_mask, train_ids, valid_ids, test_ids, I_adv, W_adv_mask, c_adv_mask = sd.sample_dataD(dataset,nodeFile,relFile,0.4, sampleFname)
+feats, labels, rel_list, rel_mask, train_ids, valid_ids, test_ids, I_adv, W_adv_mask, c_adv_mask = sd.sample_data(dataset,nodeFile,relFile,0.4, sampleFname)
 #I_adv = numpy.array(I_adv).reshape((len(I_adv),1))
 W_adv_mask = numpy.array(W_adv_mask).reshape((len(W_adv_mask),1))
 #W_adv_mask = numpy.repeat(W_adv_mask,feats.shape[-1],axis=1)
