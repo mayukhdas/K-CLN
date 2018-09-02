@@ -55,6 +55,8 @@ def remove(y, not_ids):
 if type == 'software':
     train_y = remove(labels, [test_ids])
     valid_y = remove(labels, [train_ids])
+elif type == 'pubmed':
+    test_y = remove(labels, [valid_ids, train_ids])
 else:
     train_y = remove(labels, [valid_ids, test_ids])
     valid_y = remove(labels, [train_ids, test_ids])
