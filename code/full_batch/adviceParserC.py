@@ -202,7 +202,7 @@ def hasWordinEntity(nodefile,word,entity):
     #for line in entity_whole_list:
         #print line[0],entity
         #if line[0]==entity:
-    if str.lower(word) in str.lower(entity_whole_list[entity]):
+    if word.lower() in entity_whole_list[entity].lower():
             #print "found"
         ret = True
     return ret
