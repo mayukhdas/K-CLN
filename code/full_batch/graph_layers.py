@@ -259,9 +259,9 @@ class GraphDense(Layer):
         # print("n_rel",type(n_rel))
         context = x[rel.flatten()].reshape([n_nodes, n_rel, n_neigh, dim])
         
-        advice_gate = K.sum((y_adv_mask - yprobs)*y_adv_mask, axis=1) #MD
-        c_adv_mask = K.exp(c_adv_mask[:, :, :] * advice_gate[:, None, None])#MD
-        context = context * c_adv_mask[:, :, :, None] #MD
+        #advice_gate = K.sum((y_adv_mask - yprobs)*y_adv_mask, axis=1) #MD
+        #c_adv_mask = K.exp(c_adv_mask[:, :, :] * advice_gate[:, None, None])#MD
+        #context = context * c_adv_mask[:, :, :, None] #MD
         
         context = context * mask_mul[:, :, :, None]
         #context = context * c_adv_mask[:, :, :, None] # MD & Yang
@@ -298,7 +298,7 @@ class GraphDense(Layer):
         # print("this V")
         # print(type(self.V))
         #print("dimension of V:  ", K.eval(self.V).shape)
-        x = x*advice_gate[:,None]
+        #x = x*advice_gate[:,None]
         
         h = K.dot(x, self.W) + context
         if self.bias:
