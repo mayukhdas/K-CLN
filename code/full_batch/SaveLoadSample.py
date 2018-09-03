@@ -18,8 +18,8 @@ def save_sample(train_ids,valid_ids,test_ids, name, loc):
     finalloc = loc + name+'.json'
     data = {}
     
-    train_ids_sample = random.sample(train_ids, int(len(train_ids)*0.1))
-    valid_ids_sample = random.sample(valid_ids, int(len(valid_ids)*0.1))
+    train_ids_sample = random.sample(train_ids, int(len(train_ids)*0.4))
+    valid_ids_sample = random.sample(valid_ids, int(len(valid_ids)*0.4))
     test_ids_sample = random.sample(test_ids, int(len(test_ids)))
     
     data['train'] = train_ids_sample
@@ -39,9 +39,9 @@ def load_sample(filepath):
     
     return train, valid, test
 
-#f = gzip.open('../data/' + 'pubmed' + '.pkl.gz', 'rb')
+#f = gzip.open('../data/' + 'corporate' + '.pkl.gz', 'rb')
 #feats, labels, rel_list, train_ids, valid_ids, test_ids = cPickle.load(f)
-#save_sample(train_ids, valid_ids, test_ids, 'pubmedSample10P.json', '../data/')
+#save_sample(train_ids, valid_ids, test_ids, 'corporateSample40P', '../data/')
 
 
     
