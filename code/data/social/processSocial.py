@@ -27,7 +27,7 @@ def locPartialMatch(s1,s2):
     return True if m.ratio()>0.7 else None
     
 
-with open('socialmedia-disaster-tweets-DFE.csv', 'rU') as f:
+with open('socialmedia-disaster-tweets-DFEshortened.csv', 'rU') as f:
     line = csv.reader(f)
     count =0
     for row in line:
@@ -64,7 +64,7 @@ for i in range(len(cols)):
 labels = []
 for  d in cols:
     l = 0
-    print d[5]
+    #print d[5]
     if d[5] == "relevant":
         l =1
     else:
