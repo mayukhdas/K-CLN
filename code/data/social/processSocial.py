@@ -14,6 +14,7 @@ import numpy as np
 import cPickle as pkl
 import random
 from difflib import SequenceMatcher
+import gzip
 
 
 titles=[]
@@ -64,8 +65,8 @@ for i in range(len(cols)):
 labels = []
 for  d in cols:
     l = 0
-    #print d[5]
-    if d[5] == "relevant":
+    #print "label",d[5]
+    if d[5] == "Relevant":
         l =1
     else:
         l = 0
@@ -149,5 +150,6 @@ valid = random.sample(tot, int(len(train)*0.1))
 
 finalfeats = np.array(finalfeats).reshape((len(finalfeats),len(finalfeats[0])))
 labels = np.array(labels)
-with open('social.pkl', 'wb') as f:
+with open('social.pkl.gz', 'wb') as f:
     pkl.dump((finalfeats,labels,rels,train,valid,test), f)
+
