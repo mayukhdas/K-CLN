@@ -13,6 +13,7 @@ import json
 import numpy as np
 import cPickle as pkl
 import random
+import gzip
 from difflib import SequenceMatcher
 
 
@@ -21,10 +22,6 @@ titles=[]
 cols = []
 data = []
 
-def locPartialMatch(s1,s2):
-    #print "checking"
-    m = SequenceMatcher(None, s1, s2)
-    return True if m.ratio()>0.7 else None
     
 
 with open('socialmedia-disaster-tweets-DFEshortened.csv', 'rU') as f:
@@ -45,46 +42,10 @@ print titles
 print len(cols)
 #print data
 
-
-#------------ gen relations -------------
-rels=[]
-for i in range(len(cols)):
-    sameUser = []
-    sameLoc = []
-    for j in range(len(cols)):
-        if (i!=j) and (cols[i][-1]==cols[j][-1]):
-            #print "got it"
-            sameUser.append(j)
-        elif (i!=j) and (locPartialMatch(cols[i][-1],cols[j][-1]) is True):
-            sameLoc.append(j)
-    rels.append([sameUser,sameLoc])
-#print rels
-# ------------- generate labels ------------------- 
-
-labels = []
-for  d in cols:
-    l = 0
-    #print d[5]
-    if d[5] == "relevant":
-        l =1
-    else:
-        l = 0
-    labels.append(l)
-print labels
+f = gzip.open("socialStep1.pkl.gz",'rb')
+labels, rels, otherf = pkl.load(f)
 
 
-#--------- gen other features -----------
-otherf = []
-for  d in cols:
-    f = [0]*2
-    f[0] = int(d[3])
-    f[1] = float(d[6])
-    otherf.append(f)
-    
-print otherf
-
-#with open('socialStep1.pkl', 'wb') as f:
-    #pkl.dump((labels,rels,otherf), f)
 
 
 #------------ genfeatures ---------------
@@ -151,3 +112,4 @@ finalfeats = np.array(finalfeats).reshape((len(finalfeats),len(finalfeats[0])))
 labels = np.array(labels)
 with open('social.pkl', 'wb') as f:
     pkl.dump((finalfeats,labels,rels,train,valid,test), f)
+
