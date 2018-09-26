@@ -1,3 +1,3 @@
 Training log:
 epoch	loss	v_loss	|	tr_auc	tr_f1	tr_pre	tr_rec	|	v_auc	v_f1	v_pre	v_rec	|	t_auc	t_f1	t_pre	t_rec
-0	0.6904	nan	|	0.6300	0.0000	0.0000	0.0000	|	0.5829	0.0000	0.0000	0.0000	|	0.6280	0.0000	0.0000	0.0000	|  Best result at epoch 0
+0	0.6907	nan	|	0.6744	0.0000	0.0000	0.0000	|	0.6332	0.0000	0.0000	0.0000	|	0.6687	0.0000	0.0000	0.0000	|  Best result at epoch 0
